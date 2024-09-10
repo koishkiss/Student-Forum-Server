@@ -85,6 +85,12 @@
 			<version>13.0</version>
 		</dependency>
 
+		<dependency> <!--BCrypt加密算法-->
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
