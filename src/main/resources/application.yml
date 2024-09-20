@@ -32,23 +32,23 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
 
 path:
-  #  web-path: http://127.0.0.1:8080
-  web-path: http://47.113.194.64:8080
+  web-path: http://127.0.0.1:8080
+#  web-local_path: http://47.113.194.64:8080
 
   default-avatar-name: default-avatar.png
   default-photo-name: default-photo.png
 
   image-web-path: /image/
-  #  image-local-path: D:/resource/welfare/img/
-  image-local-path: /home/resource/welfare/img/
+  image-local-path: D:/resource/forum/img/
+#  image-local-local_path: /home/resource/welfare/img/
 
   video-web-path: /video/
-  #  video-local-path: D:/resource/welfare/video/
-  video-local-path: /home/resource/welfare/video/
+  video-local-path: D:/resource/forum/video/
+#  video-local-local_path: /home/resource/welfare/video/
 
   audio-web-path: /audio/
-  #  audio-local-path: D:/resource/welfare/audio/
-  audio-local-path: /home/resource/welfare/audio/
+  audio-local-path: D:/resource/forum/audio/
+#  audio-local-local_path: /home/resource/welfare/audio/
 
 
 server:

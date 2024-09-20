@@ -20,7 +20,8 @@ public enum CommonErr {
     TOKEN_CHECK_FAILED(40011),
     POST_CHECK_FAILED(40012),
     FILE_OUT_OF_LIMIT(40013,"文件大小超出限制!"),
-    ARTICLE_IS_DELETE(40014,"好像已经被删除了呢");
+    ARTICLE_IS_DELETE(40014,"好像已经被删除了呢"),
+    NO_AUTHORITY(40015,"你不能访问这里哦!");
 
     private final int code;
     private String message;

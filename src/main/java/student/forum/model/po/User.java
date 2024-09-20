@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.mindrot.jbcrypt.BCrypt;
+import student.forum.model.CONSTANT.VALUE;
+import student.forum.model.ENUM.FileType;
+import student.forum.util.FileUtil;
 
 @Getter
 @Setter
@@ -26,8 +29,30 @@ public class User {
 
     private String realName;
 
+    private String nickname;
+
+    @JsonIgnore
+    private String avatar;
+
+    private String signature;
+
+    @SuppressWarnings("unused")
+    public String getAvatarURL() {
+        return FileUtil.getFileURL(avatar, FileType.IMAGE);
+    }
+
     public boolean checkPassword(String password) {
         return BCrypt.checkpw(password,this.password);
+    }
+
+    @JsonIgnore
+    public boolean isLocked() {
+        return authority == 0;
+    }
+
+    @JsonIgnore
+    public boolean isAdmin() {
+        return authority >= 2;
     }
 
 }

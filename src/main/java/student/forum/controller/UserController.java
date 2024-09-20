@@ -1,9 +1,9 @@
 package student.forum.controller;
 
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import student.forum.model.dto.SDULoginData;
 import student.forum.model.vo.Response;
 import student.forum.service.UserService;
@@ -14,10 +14,29 @@ public class UserController {
     @Resource
     UserService userService;
 
-    /**/
     @PostMapping("/user/login")
     public Response login(@RequestBody SDULoginData sduLoginData) {
         return userService.login(sduLoginData);
+    }
+
+    @GetMapping("/user/mine/info")
+    public Response getMyInfo(HttpServletRequest request) {
+        return Response.success(request.getAttribute("user"));
+    }
+
+    @PostMapping("/user/update/avatar")
+    public Response updateAvatar(
+            HttpServletRequest request,
+            @RequestParam(name = "image") MultipartFile image) {
+        return userService.updateAvatar(request.getIntHeader("uid"),image);
+    }
+
+    @GetMapping("/user/update/information")
+    public Response updateInformation(
+            HttpServletRequest request,
+            @RequestParam(name = "nickname") String nickname,
+            @RequestParam(name = "signature") String signature){
+        return userService.updateInformation(request.getIntHeader("uid"),nickname,signature);
     }
 
 }
