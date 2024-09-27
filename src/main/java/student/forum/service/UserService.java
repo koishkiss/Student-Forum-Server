@@ -8,7 +8,9 @@ import student.forum.model.CONSTANT.MAPPER;
 import student.forum.model.ENUM.FileType;
 import student.forum.model.dto.SDULoginData;
 import student.forum.model.po.User;
+import student.forum.model.vo.CommonErr;
 import student.forum.model.vo.Response;
+import student.forum.util.CheckUtil;
 import student.forum.util.FileUtil;
 import student.forum.util.JwtUtil;
 
@@ -49,6 +51,9 @@ public class UserService {
         boolean first = true;
 
         if (nickname != null && !nickname.isBlank()) {
+            if (CheckUtil.checkSQL(nickname)) {
+                return Response.failure(CommonErr.SQL_NOT_ALLOWED_IN_STRING);
+            }
             if (MAPPER.user.judgeNicknameExists(nickname)) {
                 return Response.failure(400,"该昵称已存在!");
             }
@@ -57,6 +62,9 @@ public class UserService {
         }
 
         if (signature != null && !signature.isBlank()) {
+            if (CheckUtil.checkSQL(signature)) {
+                return Response.failure(CommonErr.SQL_NOT_ALLOWED_IN_STRING);
+            }
             if (!first) sql += ",";
             else first = false;
             sql += String.format("`signature`='%s'",signature);

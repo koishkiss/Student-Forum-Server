@@ -37,12 +37,6 @@ public class ExceptionHandlers {
             System.out.println(e.getMessage());
             return Response.failure(CommonErr.TOKEN_CHECK_FAILED.setMsg(e.getMessage()));
         }
-        if (e instanceof HttpMessageNotReadableException) {
-            if (e.getCause() instanceof JsonMappingException && e.getCause().getCause() instanceof  CheckException) {
-                System.out.println(e.getCause().getMessage());
-                return Response.failure(CommonErr.POST_CHECK_FAILED.setMsg(e.getCause().getCause().getMessage()));
-            }
-        }
 
         System.out.println(e.getMessage());
         e.printStackTrace();

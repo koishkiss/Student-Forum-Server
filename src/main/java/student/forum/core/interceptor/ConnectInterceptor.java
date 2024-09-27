@@ -26,11 +26,14 @@ public class ConnectInterceptor implements HandlerInterceptor {
     //对任意游客开放的接口
     private static final String[] FOR_TOURIST = {
             "/user/login",
+            "/section/info",
             "/home-page"
     };
 
     //对管理员开放的接口
     private static final String[] FOR_ADMIN = {
+            "/section/create",
+            "/section/update"
     };
 
     @Override

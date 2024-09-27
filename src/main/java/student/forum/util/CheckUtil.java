@@ -1,5 +1,6 @@
 package student.forum.util;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
@@ -32,4 +33,9 @@ public class CheckUtil {
         return Pattern.matches(phoneFormat, phone);
     }
 
+    public static final Pattern sql = Pattern.compile("\\b(and|exec|insert|select|drop|grant|alter|delete|update|count|chr|mid|master|truncate|char|declare|or)\\b|([*;+'%])");
+    public static boolean checkSQL(String str) {
+        Matcher matcher = sql.matcher(str);
+        return matcher.find();
+    }
 }

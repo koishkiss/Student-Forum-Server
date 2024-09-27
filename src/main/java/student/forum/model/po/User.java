@@ -55,4 +55,9 @@ public class User {
         return authority >= 2;
     }
 
+    @JsonIgnore
+    public boolean isSuperAdmin() {
+        return authority == 3;
+    }
+
 }
