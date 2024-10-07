@@ -11,6 +11,8 @@ import student.forum.model.vo.Response;
 import student.forum.util.CheckUtil;
 import student.forum.util.FileUtil;
 
+import java.util.Objects;
+
 @Service
 public class SectionService {
 
@@ -27,7 +29,6 @@ public class SectionService {
             int sectionId = MAPPER.section.getIdByName(newSection.getName());
             MAPPER.section_join.join(sectionId,user.getUid(),2);
         }
-
         return Response.ok();
     }
 
@@ -74,9 +75,39 @@ public class SectionService {
         return Response.ok();
     }
 
-    public Response getSectionInfo(int id) {
+    public Response setNewAdmin(User user, int sectionId, int uid) {
+        Section section = MAPPER.section.getInformation(sectionId);
+        if (!(user.isSuperAdmin() || Objects.equals(section.getModerator(), user.getUid()))) {
+            return Response.failure(CommonErr.NO_AUTHORITY);
+        }
+
+        if (section.addAdmin(uid)) {
+            MAPPER.section_join.updateIdentity(sectionId,uid,1);
+            MAPPER.section.updateAdminList(sectionId,section.getAdmin());
+            return Response.ok();
+        }
+        else return Response.failure(400,"添加失败");
+    }
+
+    public Response deleteAdmin(User user, int sectionId, int uid) {
+        Section section = MAPPER.section.getInformation(sectionId);
+        if (!(user.isSuperAdmin() || Objects.equals(section.getModerator(), user.getUid()))) {
+            return Response.failure(CommonErr.NO_AUTHORITY);
+        }
+
+        if (section.deleteAdmin(uid)) {
+            MAPPER.section_join.updateIdentity(sectionId,uid,0);
+            MAPPER.section.updateAdminList(sectionId,section.getAdmin());
+            return Response.ok();
+        }
+        else return Response.failure(400,"添加失败");
+    }
+
+    public Response getSectionInfo(int uid,int id) {
         Section section = MAPPER.section.getInformation(id);
-        if (section != null) return Response.success(section);
+        if (section != null) {
+            return Response.success(section.toReturnMap(uid));
+        }
         else return Response.failure(CommonErr.NO_DATA);
     }
 

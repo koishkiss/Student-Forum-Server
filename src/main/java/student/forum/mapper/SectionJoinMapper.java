@@ -1,10 +1,7 @@
 package student.forum.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import student.forum.model.po.SectionJoin;
 
 @Mapper
@@ -15,10 +12,10 @@ public interface SectionJoinMapper extends BaseMapper<SectionJoin> {
             "UPDATE `user` SET `join_num`=`join_num`+1 WHERE `uid`=#{uid}")
     void join(int sectionId, int uid);
 
-    @Insert("INSERT INTO `section_join`(`section_id`,`uid`,`authority`) VALUES(#{sectionId},#{uid},#{authority});" +
+    @Insert("INSERT INTO `section_join`(`section_id`,`uid`,`identity`) VALUES(#{sectionId},#{uid},#{identity});" +
             "UPDATE `section` SET `member_num`=`member_num`+1 WHERE `id`=#{sectionId};" +
             "UPDATE `user` SET `join_num`=`join_num`+1 WHERE `uid`=#{uid}")
-    void join(int sectionId, int uid, int authority);
+    void join(int sectionId, int uid, int identity);
 
     @Delete("DELETE FROM `section_join` WHERE `section_id`=#{sectionId},`uid`=#{uid};" +
             "UPDATE `section` SET `member_num`=`member_num`-1 WHERE `id`=#{sectionId};" +
@@ -30,5 +27,8 @@ public interface SectionJoinMapper extends BaseMapper<SectionJoin> {
 
     @Select("SELECT * FROM `section_join` WHERE `section_id`=#{sectionId},`uid`=#{uid}")
     SectionJoin getInfo(int sectionId, int uid);
+
+    @Update("UPDATE `section_join` SET `identity`=#{identity} WHERE `section_id`=#{sectionId},`uid`=#{uid}")
+    void updateIdentity(int sectionId, int uid, int identity);
 
 }

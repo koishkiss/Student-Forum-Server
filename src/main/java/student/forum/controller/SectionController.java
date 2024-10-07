@@ -43,10 +43,30 @@ public class SectionController {
         return sectionService.updateSectionInformation((User) request.getAttribute("user"),id,slogan,classify);
     }
 
+    //设置管理员
+    @PostMapping("/section/member/addAdmin")
+    public Response addAdmin(
+            HttpServletRequest request,
+            @RequestParam(name = "sectionId") Integer sectionId,
+            @RequestParam(name = "uid") Integer uid) {
+        return sectionService.setNewAdmin((User) request.getAttribute("user"),sectionId,uid);
+    }
+
+    //取消管理员
+    @PostMapping("/section/member/deleteAdmin")
+    public Response deleteAdmin(
+            HttpServletRequest request,
+            @RequestParam(name = "sectionId") Integer sectionId,
+            @RequestParam(name = "uid") Integer uid) {
+        return sectionService.deleteAdmin((User) request.getAttribute("user"),sectionId,uid);
+    }
+
     //查看版块信息
     @GetMapping("/section/info")
-    public Response getSectionInfo(@RequestParam(name = "sectionId") Integer id) {
-        return sectionService.getSectionInfo(id);
+    public Response getSectionInfo(
+            HttpServletRequest request,
+            @RequestParam(name = "sectionId") Integer id) {
+        return sectionService.getSectionInfo(((User) request.getAttribute("user")).getUid(), id);
     }
 
     //关注该板块

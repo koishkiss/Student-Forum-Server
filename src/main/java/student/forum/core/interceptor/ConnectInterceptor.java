@@ -33,7 +33,8 @@ public class ConnectInterceptor implements HandlerInterceptor {
     //对管理员开放的接口
     private static final String[] FOR_ADMIN = {
             "/section/create",
-            "/section/update"
+            "/section/update",
+            "/section/member"
     };
 
     @Override

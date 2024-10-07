@@ -44,6 +44,10 @@ public interface SectionMapper extends BaseMapper<Section> {
     @Update("UPDATE `section` SET ${sql} WHERE `id`=#{id}")
     void updateInformation(int id, String sql);
 
+    //更新管理员
+    @Update("UPDATE `section` SET `admin`=#{adminList} WHERE `id`=#{id}")
+    void updateAdminList(int id, String adminList);
+
     //获取版主信息
     @Select("SELECT `moderator` FROM `section` WHERE `id`=#{id}")
     int getModeratorBySection(int id);
