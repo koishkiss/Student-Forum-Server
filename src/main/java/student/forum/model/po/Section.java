@@ -51,11 +51,11 @@ public class Section {
         returnMap.put("slogan",slogan);
         returnMap.put("memberNum",memberNum);
         returnMap.put("postNum",postNum);
-        returnMap.put("classify",classify);
+        returnMap.put("classify",MAPPER.classify.selectById(classify).getName());
         returnMap.put("moderator",moderator);
         returnMap.put("admin",admin);
         returnMap.put("createTime",createTime);
-        SectionJoin sectionJoin = MAPPER.section_join.getInfo(id,uid);
+        SectionJoin sectionJoin = uid != -1 ? MAPPER.section_join.getInfo(id,uid) : null;
         if (sectionJoin != null) {
             returnMap.put("hasJoin",true);
             returnMap.put("joinTime",sectionJoin.getJoinTime());

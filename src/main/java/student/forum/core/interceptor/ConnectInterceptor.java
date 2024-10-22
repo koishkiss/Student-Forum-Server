@@ -51,18 +51,21 @@ public class ConnectInterceptor implements HandlerInterceptor {
         //测试未带token时使用
 //        if (true) return true;
 
-        //任意游客可访问的接口，无需请求头即可访问
-        if (Arrays.stream(FOR_TOURIST).anyMatch(path::startsWith)) {
-            return true;
-        }
-
         //检查是否携带token
         String token = request.getHeader("Authorization");
-        if (token == null) throw new TokenException("请登入!");
+        if (token == null) {
+            //任意游客可访问的接口，无需请求头即可访问
+            if (Arrays.stream(FOR_TOURIST).anyMatch(path::startsWith)) return true;
+            else throw new TokenException("请登入!");
+        }
 
         //检查是否携带uid
         int uid = request.getIntHeader("uid");
-        if (uid == -1) throw new TokenException("请登入!");
+        if (uid == -1) {
+            //任意游客可访问的接口，无需请求头即可访问
+            if (Arrays.stream(FOR_TOURIST).anyMatch(path::startsWith)) return true;
+            else throw new TokenException("请登入!");
+        }
 
         //检查uid和token是否匹配
         int claims = JwtUtil.getClaimsByToken(token);

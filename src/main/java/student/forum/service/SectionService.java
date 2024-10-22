@@ -21,6 +21,10 @@ public class SectionService {
             return Response.failure(400,"版块名称已经存在!");
         }
 
+        if (!MAPPER.classify.judgeExistsById(newSection.getClassify())) {
+            return Response.failure(400,"分类不存在!");
+        }
+
         newSection.setModerator(beModerator ? user.getUid() : -1);
 
         MAPPER.section.create(newSection);
@@ -62,7 +66,9 @@ public class SectionService {
         }
 
         if (classify != null) {
-            //TODO: 添加检查分类存在性
+            if (!MAPPER.classify.judgeExistsById(classify)) {
+                return Response.failure(400,"分类不存在!");
+            }
             if (!first) sql += ",";
             else first = false;
             sql += String.format("`classify`='%d'",classify);

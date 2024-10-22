@@ -12,6 +12,7 @@ public class MAPPER implements InitializingBean {
         user = userMapper;
 
         section = sectionMapper;
+        classify = classifyMapper;
         section_join = sectionJoinMapper;
 
         post = postMapper;
@@ -27,6 +28,10 @@ public class MAPPER implements InitializingBean {
     @Autowired
     protected SectionMapper sectionMapper;
     public static SectionMapper section;
+
+    @Autowired
+    protected ClassifyMapper classifyMapper;
+    public static ClassifyMapper classify;
 
     @Autowired
     protected SectionJoinMapper sectionJoinMapper;

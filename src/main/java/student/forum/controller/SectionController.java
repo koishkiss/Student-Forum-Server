@@ -20,7 +20,7 @@ public class SectionController {
     public Response createNewSection(
             HttpServletRequest request,
             @RequestBody Section section,
-            @RequestParam(name = "beModerator") boolean beModerator) {
+            @RequestParam(name = "beModerator",defaultValue = "true") boolean beModerator) {
         return sectionService.createNewSection((User) request.getAttribute("user"), section, beModerator);
     }
 
@@ -34,12 +34,12 @@ public class SectionController {
     }
 
     //更改版块信息
-    @GetMapping("/section/update/info")
+    @PostMapping("/section/update/info")
     public Response updateSectionInfo(
             HttpServletRequest request,
             @RequestParam(name = "sectionId") Integer id,
-            @RequestParam(name = "slogan") String slogan,
-            @RequestParam(name = "classify") Integer classify) {
+            @RequestParam(name = "slogan", required = false) String slogan,
+            @RequestParam(name = "classify", required = false) Integer classify) {
         return sectionService.updateSectionInformation((User) request.getAttribute("user"),id,slogan,classify);
     }
 
@@ -66,7 +66,12 @@ public class SectionController {
     public Response getSectionInfo(
             HttpServletRequest request,
             @RequestParam(name = "sectionId") Integer id) {
-        return sectionService.getSectionInfo(((User) request.getAttribute("user")).getUid(), id);
+        Object o = request.getAttribute("user");
+        if (o != null) {
+            return sectionService.getSectionInfo(((User) o).getUid(), id);
+        } else {
+            return sectionService.getSectionInfo(-1,id);
+        }
     }
 
     //关注该板块

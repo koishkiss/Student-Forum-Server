@@ -14,20 +14,20 @@ import java.util.Map;
 @Mapper
 public interface PostMapper extends BaseMapper<Post> {
 
-    //创建帖子信息
+    //发布帖子
     @Insert("INSERT INTO `post`(" +
                 "`section_id`," +
                 "`uid`," +
                 "`title`," +
                 "`cover`," +
-                "`content`," +
+                "`content`" +
             ") " +
             "VALUES (" +
                 "#{sectionId}," +
                 "#{uid}," +
                 "#{title}," +
                 "#{cover}," +
-                "#{content}," +
+                "#{content}" +
             ");" +
             "UPDATE `section` SET `post_num`=`post_num`+1 WHERE `id`=#{sectionId};" +
             "UPDATE `user` SET `post_num`=`post_num`+1 WHERE `uid`=#{uid}"
@@ -41,7 +41,7 @@ public interface PostMapper extends BaseMapper<Post> {
                 "P.`uid`," +
                 "P.`title`," +
                 "P.`cover`," +
-                "SUBSTRING(P.`content`,1,10) AS `content`," +
+                "SUBSTRING(P.`content`,1,30) AS `content`," +
                 "P.`post_time` AS `postTime`," +
                 "P.`view_num` AS `viewNum`," +
                 "P.`like_num` AS `likeNum`," +
@@ -49,14 +49,17 @@ public interface PostMapper extends BaseMapper<Post> {
                 "P.`comment_num` AS `commentNum`," +
                 "P.`status`," +
                 "U.`nickname`," +
-                "U.`avatar` " +
+                "U.`avatar`," +
+                "PL.`like_time`," +
+                "PB.`mark_time` " +
             "FROM `post` P " +
-            "JOIN `user` U " +
-            "ON P.`uid`=U.`uid` " +
+            "JOIN `user` U ON P.`uid`=U.`uid` " +
+            "LEFT JOIN `post_like` PL ON PL.`post_id`=P.`id` AND PL.`uid`=#{uid} " +
+            "LEFT JOIN `post_bookmark` PB ON PB.`post_id`=P.`id` AND PB.`uid`=#{uid} " +
             "WHERE ${sql} " +
             "LIMIT #{offset},#{pageSize}"
     )
-    List<Map<String,Object>> search(String sql,int pageSize,int offset);
+    List<Map<String,Object>> search(int uid, String sql, int pageSize, int offset);
 
     //获取帖子内容
     @Select("SELECT * FROM `post` WHERE `id`=#{id}")
@@ -68,7 +71,7 @@ public interface PostMapper extends BaseMapper<Post> {
 
     //设置帖子精选状态
     @Update("UPDATE `post` SET `status`=#{status} WHERE `id`=#{id}")
-    boolean setSelected(int id,int status);
+    void setSelected(int id,int status);
 
 
 }
