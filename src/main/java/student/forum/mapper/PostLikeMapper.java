@@ -34,7 +34,7 @@ public interface PostLikeMapper extends BaseMapper<PostLike> {
                 "P.`section_id` AS `sectionId`," +
                 "P.`title`," +
                 "P.`cover`," +
-                "SUBSTRING(P.`content`,1,10) AS `content`," +
+                "SUBSTRING(P.`content`,1,30) AS `content`," +
                 "P.`post_time` AS `postTime`," +
                 "P.`view_num` AS `viewNum`," +
                 "P.`like_num` AS `likeNum`," +

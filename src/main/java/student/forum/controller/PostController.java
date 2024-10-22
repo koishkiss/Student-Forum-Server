@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 import student.forum.model.po.Post;
 import student.forum.model.po.User;
+import student.forum.model.vo.CommonErr;
 import student.forum.model.vo.Response;
 import student.forum.service.PostService;
 
@@ -23,7 +24,7 @@ public class PostController {
     }
 
     //按不同方式检索帖子
-    @GetMapping("/section/post/select")
+    @GetMapping("/post/get")
     public Response selectPostsBySectionId(
             HttpServletRequest request,
             @RequestParam(name = "uid",required = false) Integer uid,
@@ -31,6 +32,20 @@ public class PostController {
             @RequestParam(name = "search",required = false) String search,
             @RequestParam(name = "offset",defaultValue = "0") Integer offset) {
         return postService.selectPosts(((User) request.getAttribute("user")).getUid(), uid, sectionId, search, offset);
+    }
+
+    //获取某用户喜欢的\收藏的\看过的帖子
+    @GetMapping("/post/get/{type}")
+    public Response selectPostsLiked(
+            @RequestParam(name = "uid") Integer uid,
+            @RequestParam(name = "offset") Integer offset,
+            @PathVariable(name = "type") String type) {
+        return switch (type) {
+            case "liked" -> postService.selectPosts(uid, offset, 1);
+            case "marked" -> postService.selectPosts(uid, offset, 2);
+            case "viewed" -> postService.selectPosts(uid, offset, 3);
+            default -> Response.failure(CommonErr.CONTENT_NOT_FOUND);
+        };
     }
 
     //查看某一帖子

@@ -23,6 +23,8 @@ public class VALUE implements InitializingBean {
 
         audio_web = AUDIO_WEB_PATH;
         audio_local = AUDIO_LOCAL_PATH;
+
+        page_size = PAGE_SIZE;
     }
 
     @Value("${path.web-path}")
@@ -60,5 +62,9 @@ public class VALUE implements InitializingBean {
     @Value("${path.audio-local-path}")
     protected String AUDIO_LOCAL_PATH;
     public static String audio_local;
+
+    @Value("${page.page-size}")
+    protected int PAGE_SIZE;
+    public static int page_size;
 
 }

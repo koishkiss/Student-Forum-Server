@@ -33,7 +33,7 @@ public interface PostBookmarkMapper extends BaseMapper<PostBookmarkMapper> {
                 "P.`section_id` AS `sectionId`," +
                 "P.`title`," +
                 "P.`cover`," +
-                "SUBSTRING(P.`content`,1,10) AS `content`," +
+                "SUBSTRING(P.`content`,1,30) AS `content`," +
                 "P.`post_time` AS `postTime`," +
                 "P.`view_num` AS `viewNum`," +
                 "P.`like_num` AS `likeNum`," +

@@ -6,5 +6,4 @@ public class STATIC {
 
     public static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static final int pageSize = 10;
 }

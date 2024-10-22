@@ -2,7 +2,7 @@ package student.forum.service;
 
 import org.springframework.stereotype.Service;
 import student.forum.model.CONSTANT.MAPPER;
-import student.forum.model.CONSTANT.STATIC;
+import student.forum.model.CONSTANT.VALUE;
 import student.forum.model.ENUM.FileType;
 import student.forum.model.po.Post;
 import student.forum.model.po.User;
@@ -39,14 +39,37 @@ public class PostService {
                             .addSearchCondition("P.`title`",search)
                             .getConditionSql();
 
-        List<Map<String,Object>> postList = MAPPER.post.search(searcherUid, sql, STATIC.pageSize, offset);
+        List<Map<String,Object>> postList = MAPPER.post.search(searcherUid, sql, VALUE.page_size, offset);
 
         if (postList.isEmpty()) return Response.failure(CommonErr.NO_DATA);
 
         for (Map<String,Object> post : postList) {
             post.put("content", HtmlHandleUtil.escapeToHTML((String) post.get("content")));
-            post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
+            if (post.get("cover") != null) {
+                post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
+            }
             post.put("avatarURL",FileUtil.getFileURL((String) post.get("avatar"),FileType.IMAGE));
+        }
+
+        return Response.success(postList);
+    }
+
+    //获取某用户喜欢的\收藏的\看过的的帖子
+    public Response selectPosts(Integer uid, Integer offset, int operator) {
+        List<Map<String,Object>> postList = switch (operator) {
+            case 1 -> MAPPER.post_like.getLikeByUid(uid,offset,VALUE.page_size);
+            case 2 -> MAPPER.post_mark.getBookmarkByUid(uid,offset,VALUE.page_size);
+            case 3 -> MAPPER.post_view.getViewByUid(uid,offset,VALUE.page_size);
+            default -> throw new IllegalStateException("Unexpected value: " + operator);
+        };
+
+        if (postList.isEmpty()) return Response.failure(CommonErr.NO_DATA);
+
+        for (Map<String,Object> post : postList) {
+            post.put("content", HtmlHandleUtil.escapeToHTML((String) post.get("content")));
+            if (post.get("cover") != null) {
+                post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
+            }
         }
 
         return Response.success(postList);

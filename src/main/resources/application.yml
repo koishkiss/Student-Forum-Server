@@ -53,6 +53,8 @@ path:
   audio-local-path: D:/resource/forum/audio/
 #  audio-local-local_path: /home/resource/welfare/audio/
 
+page:
+  page-size: 10
 
 server:
   port: 8080
