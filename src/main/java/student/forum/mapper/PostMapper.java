@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import student.forum.model.po.Post;
-import student.forum.model.po.Section;
 
 import java.util.List;
 import java.util.Map;
@@ -68,6 +67,10 @@ public interface PostMapper extends BaseMapper<Post> {
     //查看帖子是否加精
     @Select("SELECT EXISTS(SELECT 1 FROM `post` WHERE `id`=#{id} AND `status`=1)")
     boolean judgeSelected(int id);
+
+    //查看帖子评论数
+    @Select("SELECT `comment_num` FROM `post` WHERE `id`=#{id}")
+    int getCommentNumById(int id);
 
     //设置帖子精选状态
     @Update("UPDATE `post` SET `status`=#{status} WHERE `id`=#{id}")

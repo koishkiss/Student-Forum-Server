@@ -21,11 +21,11 @@ public class UserService {
         if (!sduLogin.checkSid()) return Response.failure(400,"错误的学号格式");
         if (!sduLogin.checkPassword()) return Response.failure(400,"请填写密码");
 
+//        User user = MAPPER.user.register(sduLogin.getSid(), BCrypt.hashpw(sduLogin.getPassword(),BCrypt.gensalt()), sduLogin.getSid());
         User user = sduLogin.login();
         if (user == null) {
             return Response.failure(400,"学号或密码错误");
         }
-
         @Getter
         @Setter
         class Ticket {

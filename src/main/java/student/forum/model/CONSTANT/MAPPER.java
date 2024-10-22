@@ -19,6 +19,10 @@ public class MAPPER implements InitializingBean {
         post_view = postViewMapper;
         post_like = postLikeMapper;
         post_mark = postBookmarkMapper;
+
+        comment = commentMapper;
+        comment_like = commentLikeMapper;
+        reply = replyMapper;
     }
 
     @Autowired
@@ -52,5 +56,17 @@ public class MAPPER implements InitializingBean {
     @Autowired
     protected PostBookmarkMapper postBookmarkMapper;
     public static PostBookmarkMapper post_mark;
+
+    @Autowired
+    protected CommentMapper commentMapper;
+    public static CommentMapper comment;
+
+    @Autowired
+    protected CommentLikeMapper commentLikeMapper;
+    public static CommentLikeMapper comment_like;
+
+    @Autowired
+    protected ReplyMapper replyMapper;
+    public static ReplyMapper reply;
 
 }

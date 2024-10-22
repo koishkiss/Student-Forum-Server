@@ -19,11 +19,10 @@ import java.util.Map;
 public class PostService {
 
     //发布帖子
-    public Response postNewPost(int uid,Post post) {
+    public Response postNewPost(int uid, Post post) {
         if (MAPPER.section_join.judgeExists(post.getSectionId(),uid)) {
             post.setUid(uid);
             post.setContentAsText();
-            System.out.println(post.getContent());
             MAPPER.post.post(post);
             return Response.ok();
         } else {

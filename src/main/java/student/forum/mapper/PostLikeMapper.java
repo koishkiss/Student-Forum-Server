@@ -17,13 +17,13 @@ public interface PostLikeMapper extends BaseMapper<PostLike> {
     boolean judgeLiked(Integer uid, Integer postId);
 
     @Insert("INSERT INTO `post_like`(`uid`,`post_id`) VALUES(#{uid},#{postId});" +
-            "UPDATE `user` SET `like_num`=`like_num`+1 WHERE `uid`=#{uid};" +
+            "UPDATE `user` SET `like_num`=`like_num`+1 WHERE `uid`=(SELECT `uid` FROM `post` WHERE `id`=#{postId});" +
             "UPDATE `post` SET `like_num`=`like_num`+1 WHERE `id`=#{postId}"
     )
     void liked(Integer uid, Integer postId);
 
     @Delete("DELETE FROM `post_like` WHERE `uid`=#{uid} AND `post_id`=#{postId};" +
-            "UPDATE `user` SET `like_num`=`like_num`-1 WHERE `uid`=#{uid};" +
+            "UPDATE `user` SET `like_num`=`like_num`-1 WHERE `uid`=(SELECT `uid` FROM `post` WHERE `id`=#{postId});" +
             "UPDATE `post` SET `like_num`=`like_num`-1 WHERE `id`=#{postId}"
     )
     void disLiked(Integer uid, Integer postId);
