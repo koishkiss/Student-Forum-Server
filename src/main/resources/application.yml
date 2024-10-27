@@ -35,26 +35,26 @@ mybatis-plus:
       id-type: auto
 
 path:
-  web-path: http://127.0.0.1:8080
-#  web-local_path: http://47.113.194.64:8080
+#  web-path: http://127.0.0.1:22222
+  web-path: http://47.113.194.64:22222
 
   default-avatar-name: default-avatar.png
   default-photo-name: default-photo.png
 
   image-web-path: /image/
-  image-local-path: D:/resource/forum/img/
-#  image-local-local_path: /home/resource/welfare/img/
+#  image-local-path: D:/resource/forum/img/
+  image-local-path: /home/resource/forum/img/
 
   video-web-path: /video/
-  video-local-path: D:/resource/forum/video/
-#  video-local-local_path: /home/resource/welfare/video/
+#  video-local-path: D:/resource/forum/video/
+  video-local-path: /home/resource/forum/video/
 
   audio-web-path: /audio/
-  audio-local-path: D:/resource/forum/audio/
-#  audio-local-local_path: /home/resource/welfare/audio/
+#  audio-local-path: D:/resource/forum/audio/
+  audio-local-path: /home/resource/forum/audio/
 
 page:
   page-size: 10
 
 server:
-  port: 8080
+  port: 22222

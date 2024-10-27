@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.mindrot.jbcrypt.BCrypt;
-import student.forum.model.CONSTANT.VALUE;
 import student.forum.model.ENUM.FileType;
 import student.forum.util.FileUtil;
 
