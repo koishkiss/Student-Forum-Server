@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import student.forum.model.dto.SDULoginData;
+import student.forum.model.po.User;
 import student.forum.model.vo.Response;
 import student.forum.service.UserService;
 
@@ -22,8 +23,8 @@ public class UserController {
 
     //用户个人信息
     @GetMapping("/user/mine/info")
-    public Response getMyInfo(HttpServletRequest request) {
-        return Response.success(request.getAttribute("user"));
+    public Response getMyInfo(@RequestAttribute User user) {
+        return Response.success(user);
     }
 
     //用户更新头像

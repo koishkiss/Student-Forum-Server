@@ -11,6 +11,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import student.forum.model.ENUM.FileType;
 import student.forum.util.FileUtil;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,6 +36,16 @@ public class User {
     private String avatar;
 
     private String signature;
+
+    private Date registerTime;
+
+    private Integer likeNum;
+
+    private Integer bookmarkNum;
+
+    private Integer postNum;
+
+    private Integer joinNum;
 
     @SuppressWarnings("unused")
     public String getAvatarURL() {
