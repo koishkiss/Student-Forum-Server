@@ -51,8 +51,10 @@ public interface SectionMapper extends BaseMapper<Section> {
     @Update("UPDATE `section` SET `admin`=#{adminList} WHERE `id`=#{id}")
     void updateAdminList(int id, String adminList);
 
-    @Select("SELECT S.*,SJ.* FROM `section` S " +
-            "JOIN `section_join` SJ WHERE `uid`=#{uid} AND S.`id`=SJ.`section_id` ")
+    @Select("SELECT S.*,SJ.*,C.`name` AS `classifyName` FROM `section` S " +
+            "JOIN `section_join` SJ ON SJ.`uid`=#{uid} AND S.`id`=SJ.`section_id` " +
+            "JOIN `classify` C ON S.`classify`=C.`id`"
+    )
     List<JoinedSectionDTO> selectJoinedSectionByUid(int uid);
 
     //获取版主信息

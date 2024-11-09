@@ -36,6 +36,9 @@ public class JoinedSectionDTO {
     private Integer classify;
 
     @Getter
+    private String classifyName;
+
+    @Getter
     private Date createTime;
 
     @SuppressWarnings("unused")
