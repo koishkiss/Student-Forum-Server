@@ -61,6 +61,13 @@ public class SectionController {
         return sectionService.deleteAdmin((User) request.getAttribute("user"),sectionId,uid);
     }
 
+    //获取个人关注的版块
+    @GetMapping("/section/mine")
+    public Response getMyJoinedSection(
+            @RequestAttribute(name = "user") User user) {
+        return sectionService.getMyJoinedSection(user.getUid());
+    }
+
     //查看版块信息
     @GetMapping("/section/info")
     public Response getSectionInfo(

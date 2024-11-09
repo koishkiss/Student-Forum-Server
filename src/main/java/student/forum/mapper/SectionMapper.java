@@ -5,7 +5,10 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import student.forum.model.dto.JoinedSectionDTO;
 import student.forum.model.po.Section;
+
+import java.util.List;
 
 @Mapper
 public interface SectionMapper extends BaseMapper<Section> {
@@ -47,6 +50,10 @@ public interface SectionMapper extends BaseMapper<Section> {
     //更新管理员
     @Update("UPDATE `section` SET `admin`=#{adminList} WHERE `id`=#{id}")
     void updateAdminList(int id, String adminList);
+
+    @Select("SELECT S.*,SJ.* FROM `section` S " +
+            "JOIN `section_join` SJ WHERE `uid`=#{uid} AND S.`id`=SJ.`section_id` ")
+    List<JoinedSectionDTO> selectJoinedSectionByUid(int uid);
 
     //获取版主信息
     @Select("SELECT `moderator` FROM `section` WHERE `id`=#{id}")

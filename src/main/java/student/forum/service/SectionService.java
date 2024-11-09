@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import student.forum.model.CONSTANT.MAPPER;
 import student.forum.model.ENUM.FileType;
+import student.forum.model.dto.JoinedSectionDTO;
 import student.forum.model.po.Section;
 import student.forum.model.po.User;
 import student.forum.model.vo.CommonErr;
@@ -11,6 +12,7 @@ import student.forum.model.vo.Response;
 import student.forum.util.CheckUtil;
 import student.forum.util.FileUtil;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -107,6 +109,16 @@ public class SectionService {
             return Response.ok();
         }
         else return Response.failure(400,"添加失败");
+    }
+
+    public Response getMyJoinedSection(int uid) {
+        List<JoinedSectionDTO> joinedSectionList = MAPPER.section.selectJoinedSectionByUid(uid);
+        if (joinedSectionList.isEmpty()) {
+            return Response.failure(CommonErr.NO_DATA);
+        }
+        else {
+            return Response.success(joinedSectionList);
+        }
     }
 
     public Response getSectionInfo(int uid,int id) {
