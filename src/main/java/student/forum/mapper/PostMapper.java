@@ -33,6 +33,58 @@ public interface PostMapper extends BaseMapper<Post> {
     )
     void post(Post post);
 
+    //倒序获取最新帖子(首次搜索)
+    @Select("SELECT " +
+                "P.`id`," +
+                "P.`section_id` AS `sectionId`," +
+                "P.`uid`," +
+                "P.`title`," +
+                "P.`cover`," +
+                "SUBSTRING(P.`content`,1,30) AS `content`," +
+                "P.`post_time` AS `postTime`," +
+                "P.`view_num` AS `viewNum`," +
+                "P.`like_num` AS `likeNum`," +
+                "P.`bookmark_num` AS `bookmarkNum`," +
+                "P.`comment_num` AS `commentNum`," +
+                "P.`status`," +
+                "U.`nickname`," +
+                "U.`avatar`," +
+                "PL.`like_time`," +
+                "PB.`mark_time` " +
+            "FROM `post` P " +
+            "JOIN `user` U ON P.`uid`=U.`uid` " +
+            "LEFT JOIN `post_like` PL ON PL.`post_id`=P.`id` AND PL.`uid`=#{uid} " +
+            "LEFT JOIN `post_bookmark` PB ON PB.`post_id`=P.`id` AND PB.`uid`=#{uid} " +
+            "ORDER BY P.`id` DESC LIMIT #{pageSize}"
+    )
+    List<Map<String,Object>> firstSearch(Integer uid, Integer pageSize);
+
+    @Select("SELECT " +
+                "P.`id`," +
+                "P.`section_id` AS `sectionId`," +
+                "P.`uid`," +
+                "P.`title`," +
+                "P.`cover`," +
+                "SUBSTRING(P.`content`,1,30) AS `content`," +
+                "P.`post_time` AS `postTime`," +
+                "P.`view_num` AS `viewNum`," +
+                "P.`like_num` AS `likeNum`," +
+                "P.`bookmark_num` AS `bookmarkNum`," +
+                "P.`comment_num` AS `commentNum`," +
+                "P.`status`," +
+                "U.`nickname`," +
+                "U.`avatar`," +
+                "PL.`like_time`," +
+                "PB.`mark_time` " +
+            "FROM `post` P " +
+            "JOIN `user` U ON P.`uid`=U.`uid` " +
+            "LEFT JOIN `post_like` PL ON PL.`post_id`=P.`id` AND PL.`uid`=#{uid} " +
+            "LEFT JOIN `post_bookmark` PB ON PB.`post_id`=P.`id` AND PB.`uid`=#{uid} " +
+            "WHERE P.`id`<#{startPos} " +
+            "ORDER BY P.`id` DESC LIMIT #{pageSize}"
+    )
+    List<Map<String,Object>> searchTowardBack(Integer uid, Integer startPos, Integer pageSize);
+
     //条件获取帖子
     @Select("SELECT " +
                 "P.`id`," +

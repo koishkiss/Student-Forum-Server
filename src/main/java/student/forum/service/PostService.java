@@ -1,6 +1,7 @@
 package student.forum.service;
 
 import org.springframework.stereotype.Service;
+import student.forum.core.exception.CheckException;
 import student.forum.model.CONSTANT.MAPPER;
 import student.forum.model.CONSTANT.VALUE;
 import student.forum.model.ENUM.FileType;
@@ -9,6 +10,7 @@ import student.forum.model.po.Post;
 import student.forum.model.po.User;
 import student.forum.model.vo.CommonErr;
 import student.forum.model.vo.Response;
+import student.forum.model.vo.SinglePageVO;
 import student.forum.util.ConditionalSqlMaker;
 import student.forum.util.FileUtil;
 import student.forum.util.HtmlHandleUtil;
@@ -33,7 +35,37 @@ public class PostService {
 
     //获取最新的帖子
     public Response getNewPosts(User user, SinglePageSearchBO<Map<String,Object>,Integer> postPage) {
-        return null;
+        List<Map<String,Object>> postList = postPage.doSearch(new SinglePageSearchBO.Method<>() {
+            @Override
+            public List<Map<String, Object>> firstSearch(Integer pageSize) {
+                return MAPPER.post.firstSearch(user.getUid(), pageSize);
+            }
+
+            @Override
+            public List<Map<String, Object>> searchTowardFront(Integer startPos, Integer pageSize) {
+                throw new CheckException("不支持向前搜索!");
+            }
+
+            @Override
+            public List<Map<String, Object>> searchTowardBack(Integer startPos, Integer pageSize) {
+                return MAPPER.post.searchTowardBack(user.getUid(),startPos,pageSize);
+            }
+
+            @Override
+            public Integer updateLastData(List<Map<String, Object>> resultList) {
+                return (Integer) resultList.get(resultList.size() - 1).get("id");
+            }
+        });
+
+        for (Map<String,Object> post : postList) {
+            post.put("content", HtmlHandleUtil.escapeToHTML((String) post.get("content")));
+            if (post.get("cover") != null) {
+                post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
+            }
+            post.put("avatarURL",FileUtil.getFileURL((String) post.get("avatar"),FileType.IMAGE));
+        }
+
+        return Response.success(new SinglePageVO<>(postPage));
     }
 
     //条件获取帖子
