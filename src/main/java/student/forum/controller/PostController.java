@@ -3,11 +3,14 @@ package student.forum.controller;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
+import student.forum.model.bo.SinglePageSearchBO;
 import student.forum.model.po.Post;
 import student.forum.model.po.User;
 import student.forum.model.vo.CommonErr;
 import student.forum.model.vo.Response;
 import student.forum.service.PostService;
+
+import java.util.Map;
 
 @RestController
 public class PostController {
@@ -21,6 +24,14 @@ public class PostController {
             HttpServletRequest request,
             @RequestBody Post post) {
         return postService.postNewPost(((User) request.getAttribute("user")).getUid(), post);
+    }
+
+    //获取推荐的帖子(实际倒序获取)
+    @PostMapping("/post/get/recommend")
+    public Response getRecommendPost(
+            @RequestAttribute(name = "user") User user,
+            @RequestBody SinglePageSearchBO<Map<String,Object>,Integer> postPage) {
+        return postService.getNewPosts(user, postPage);
     }
 
     //按不同方式检索帖子

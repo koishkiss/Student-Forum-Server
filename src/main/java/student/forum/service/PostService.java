@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import student.forum.model.CONSTANT.MAPPER;
 import student.forum.model.CONSTANT.VALUE;
 import student.forum.model.ENUM.FileType;
+import student.forum.model.bo.SinglePageSearchBO;
 import student.forum.model.po.Post;
 import student.forum.model.po.User;
 import student.forum.model.vo.CommonErr;
@@ -28,6 +29,11 @@ public class PostService {
         } else {
             return Response.failure(400,"请先关注该板块!");
         }
+    }
+
+    //获取最新的帖子
+    public Response getNewPosts(User user, SinglePageSearchBO<Map<String,Object>,Integer> postPage) {
+        return null;
     }
 
     //条件获取帖子
