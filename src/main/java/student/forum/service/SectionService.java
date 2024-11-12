@@ -1,5 +1,6 @@
 package student.forum.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import student.forum.model.CONSTANT.MAPPER;
@@ -13,6 +14,7 @@ import student.forum.util.CheckUtil;
 import student.forum.util.FileUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -109,6 +111,22 @@ public class SectionService {
             return Response.ok();
         }
         else return Response.failure(400,"添加失败");
+    }
+
+    public Response getAllClassify() {
+        return Response.success(MAPPER.classify.selectList(new QueryWrapper<>()));
+    }
+
+    public Response getAllSectionByClassify(Integer uid,Integer classifyId) {
+        List<Map<String,Object>> sections = MAPPER.section.selectSectionsByClassifyId(uid,classifyId);
+        if (sections.isEmpty()) {
+            return Response.failure(CommonErr.NO_DATA);
+        } else {
+            for (Map<String,Object> i : sections) {
+                i.put("iconURL",FileUtil.getFileURL(i.get("iconURL").toString(),FileType.IMAGE));
+            }
+        }
+        return Response.success(sections);
     }
 
     public Response getMyJoinedSection(int uid) {

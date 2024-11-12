@@ -26,7 +26,9 @@ public class ConnectInterceptor implements HandlerInterceptor {
     //对任意游客开放的接口
     private static final String[] FOR_TOURIST = {
             "/user/login",
-            "/section/info"
+            "/section/info",
+            "/post/get/recommend",
+            "/section/classify"
     };
 
     //对管理员开放的接口
@@ -49,6 +51,8 @@ public class ConnectInterceptor implements HandlerInterceptor {
 
         //测试未带token时使用
 //        if (true) return true;
+
+        request.setAttribute("user",new User(-1));
 
         //检查是否携带token
         String token = request.getHeader("Authorization");

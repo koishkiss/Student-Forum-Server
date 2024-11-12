@@ -47,6 +47,10 @@ public class User {
 
     private Integer joinNum;
 
+    public User(Integer uid) {
+        this.uid = uid;
+    }
+
     @SuppressWarnings("unused")
     public String getAvatarURL() {
         return FileUtil.getFileURL(avatar, FileType.IMAGE);

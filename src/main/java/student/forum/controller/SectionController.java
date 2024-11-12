@@ -61,6 +61,20 @@ public class SectionController {
         return sectionService.deleteAdmin((User) request.getAttribute("user"),sectionId,uid);
     }
 
+    //获取版块分类
+    @GetMapping("/classify")
+    public Response getAllClassify() {
+        return sectionService.getAllClassify();
+    }
+
+    //根据分类获取版块
+    @GetMapping("/section/classify")
+    public Response getAllSectionByClassify(
+            @RequestAttribute(name = "user") User user,
+            @RequestParam(name = "classifyId") Integer classifyId) {
+        return sectionService.getAllSectionByClassify(user.getUid(),classifyId);
+    }
+
     //获取个人关注的版块
     @GetMapping("/section/mine")
     public Response getMyJoinedSection(

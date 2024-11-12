@@ -9,6 +9,7 @@ import student.forum.model.dto.JoinedSectionDTO;
 import student.forum.model.po.Section;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SectionMapper extends BaseMapper<Section> {
@@ -64,5 +65,23 @@ public interface SectionMapper extends BaseMapper<Section> {
     //获取信息
     @Select("SELECT * FROM `section` WHERE `id`=#{id}")
     Section getInformation(int id);
+
+    //根据分类获取版块列表
+    @Select("SELECT " +
+                "S.`id`," +
+                "S.`name`," +
+                "S.`icon` AS `iconURL`," +
+                "S.`slogan`," +
+                "S.`member_num` AS `memberNum`," +
+                "S.`post_num` AS `postNum`," +
+                "S.`classify`," +
+                "S.`create_time` AS `createTime`," +
+                "SJ.`identity`," +
+                "SJ.`join_time` AS `joinTime` " +
+            "FROM `section` S " +
+            "LEFT JOIN `section_join` SJ ON SJ.`section_id`=S.`id` AND SJ.`uid`=#{uid} " +
+            "WHERE S.`classify`=#{classifyId} "
+    )
+    List<Map<String,Object>> selectSectionsByClassifyId(Integer uid, Integer classifyId);
 
 }
