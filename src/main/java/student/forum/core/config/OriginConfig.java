@@ -25,6 +25,7 @@ public class OriginConfig {
         //允许发送GET和POST请求
         cors.addAllowedMethod("GET");
         cors.addAllowedMethod("POST");
+        cors.addAllowedMethod("PUT");
         //允许跨域发送cookie
         cors.setAllowCredentials(true);
 

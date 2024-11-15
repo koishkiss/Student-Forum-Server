@@ -28,7 +28,7 @@ public class UserController {
     }
 
     //用户更新头像
-    @PostMapping("/user/update/avatar")
+    @PutMapping("/user/update/avatar")
     public Response updateAvatar(
             HttpServletRequest request,
             @RequestParam(name = "image") MultipartFile image) {
@@ -36,11 +36,11 @@ public class UserController {
     }
 
     //更新用户信息
-    @GetMapping("/user/update/information")
+    @PutMapping("/user/update/information")
     public Response updateInformation(
             HttpServletRequest request,
-            @RequestParam(name = "nickname") String nickname,
-            @RequestParam(name = "signature") String signature){
+            @RequestParam(name = "nickname", required = false) String nickname,
+            @RequestParam(name = "signature", required = false) String signature){
         return userService.updateInformation(request.getIntHeader("uid"),nickname,signature);
     }
 
