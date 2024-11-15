@@ -78,5 +78,14 @@ public class UserService {
     }
 
 
+    public Response getOtherPersonInfo(Integer uid) {
+        User user = MAPPER.user.selectUserByUid(uid);
+        if (user == null) {
+            return Response.failure(CommonErr.NO_DATA);
+        } else {
+            return Response.success(user);
+        }
+    }
+
 
 }

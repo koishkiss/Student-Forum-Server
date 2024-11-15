@@ -44,4 +44,10 @@ public class UserController {
         return userService.updateInformation(request.getIntHeader("uid"),nickname,signature);
     }
 
+    //获取某一用户信息
+    @GetMapping("/user/other/info")
+    public Response getOtherPersonInfo(@RequestParam(name = "uid") Integer uid) {
+        return userService.getOtherPersonInfo(uid);
+    }
+
 }
