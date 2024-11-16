@@ -68,7 +68,7 @@ public interface SectionMapper extends BaseMapper<Section> {
 
     //根据分类获取版块列表
     @Select("SELECT " +
-                "S.`id`," +
+                "S.`id` AS `sectionId`," +
                 "S.`name`," +
                 "S.`icon` AS `iconURL`," +
                 "S.`slogan`," +
