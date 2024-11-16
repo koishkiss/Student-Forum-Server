@@ -24,4 +24,8 @@ public class ArrayUtil {
         listString.append(list.get(length-1)).append(")");
         return String.valueOf(listString);
     }
+
+    public static String JsonStringToString(String jsonString) {
+        return "(" + jsonString.substring(1,jsonString.length()-1) + ")";
+    }
 }

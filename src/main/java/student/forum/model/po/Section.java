@@ -10,12 +10,10 @@ import lombok.SneakyThrows;
 import student.forum.model.CONSTANT.MAPPER;
 import student.forum.model.CONSTANT.STATIC;
 import student.forum.model.ENUM.FileType;
+import student.forum.util.ArrayUtil;
 import student.forum.util.FileUtil;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @Setter
@@ -53,7 +51,7 @@ public class Section {
         returnMap.put("postNum",postNum);
         returnMap.put("classify",MAPPER.classify.selectById(classify).getName());
         returnMap.put("moderator",moderator);
-        returnMap.put("admin",admin);
+        returnMap.put("adminList",getAdminList());
         returnMap.put("createTime",createTime);
         SectionJoin sectionJoin = uid != -1 ? MAPPER.section_join.getInfo(id,uid) : null;
         if (sectionJoin != null) {
@@ -64,6 +62,18 @@ public class Section {
             returnMap.put("hasJoin",false);
         }
         return returnMap;
+    }
+
+    public List<Map<String,Object>> getAdminList() {
+        if (admin.length() > 2) {
+            List<Map<String, Object>> adminList = MAPPER.user.selectUserSimpleInfoListByUidList(ArrayUtil.JsonStringToString(admin));
+            for (Map<String, Object> i : adminList) {
+                i.put("avatarURL", FileUtil.getFileURL(i.get("avatarURL").toString(), FileType.IMAGE));
+            }
+            return adminList;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @SneakyThrows

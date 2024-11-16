@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import student.forum.model.po.User;
 
+import java.util.List;
+import java.util.Map;
+
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
@@ -31,6 +34,9 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT * FROM `user` WHERE `uid`=#{uid}")
     User selectUserByUid(int uid);
 
+    @Select("SELECT `uid`,`nickname`,`avatar` AS `avatarURL` FROM `user` WHERE `uid` IN ${uidList}")
+    List<Map<String,Object>> selectUserSimpleInfoListByUidList(String uidList);
+
     @Select("SELECT EXISTS(SELECT 1 FROM `user` WHERE `nickname`=#{nickname})")
     boolean judgeNicknameExists(String nickname);
 
@@ -39,5 +45,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Update("UPDATE `user` SET ${sql} WHERE `uid`=#{uid}")
     void updateInformation(int uid, String sql);
+
 
 }

@@ -5,9 +5,11 @@ import student.forum.core.exception.CheckException;
 import student.forum.model.CONSTANT.MAPPER;
 import student.forum.model.CONSTANT.VALUE;
 import student.forum.model.ENUM.FileType;
+import student.forum.model.bo.AllPageSearchBO;
 import student.forum.model.bo.SinglePageSearchBO;
 import student.forum.model.po.Post;
 import student.forum.model.po.User;
+import student.forum.model.vo.AllPageVO;
 import student.forum.model.vo.CommonErr;
 import student.forum.model.vo.Response;
 import student.forum.model.vo.SinglePageVO;
@@ -68,15 +70,51 @@ public class PostService {
         return Response.success(new SinglePageVO<>(postPage));
     }
 
+    public Response selectPostsBySectionId(
+            Integer uid,
+            Integer sectionId,
+            Boolean onlySelected,
+            AllPageSearchBO<Map<String,Object>> postPage) {
+        List<Map<String,Object>> postList = postPage.doSearch(new AllPageSearchBO.Method<>() {
+            @Override
+            public Integer getDataNum() {
+                return onlySelected ?
+                        MAPPER.post.countSelectedPostNumInSection(sectionId) :
+                        MAPPER.post.countPostNumInSection(sectionId);
+            }
+
+            @Override
+            public List<Map<String, Object>> getData(Integer offset, Integer pageSize) {
+                ConditionalSqlMaker sqlMaker = new ConditionalSqlMaker();
+                if (onlySelected) {
+                    sqlMaker.addCondition("P.`section_id`",sectionId).addCondition("P.`status`",1);
+                } else {
+                    sqlMaker.addCondition("P.`section_id`",sectionId);
+                }
+                return MAPPER.post.search(uid,sqlMaker.getConditionSql(),pageSize,offset);
+            }
+        });
+
+        for (Map<String,Object> post : postList) {
+            post.put("content", HtmlHandleUtil.escapeToHTML((String) post.get("content")));
+            if (post.get("cover") != null) {
+                post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
+            }
+            post.put("avatarURL",FileUtil.getFileURL((String) post.get("avatar"),FileType.IMAGE));
+        }
+
+        return Response.success(new AllPageVO<>(postPage));
+    }
+
     //条件获取帖子
-    public Response selectPosts(int searcherUid, Integer uid, Integer sectionId, String search, Integer offset) {
+    public Response selectPosts(int searcherUid, Integer uid, Integer sectionId, String search, Integer offset, Integer pageSize) {
         ConditionalSqlMaker sqlMaker = new ConditionalSqlMaker();
         String sql = sqlMaker.addCondition("U.`uid`",uid)
                             .addCondition("P.`section_id`",sectionId)
                             .addSearchCondition("P.`title`",search)
                             .getConditionSql();
 
-        List<Map<String,Object>> postList = MAPPER.post.search(searcherUid, sql, VALUE.page_size, offset);
+        List<Map<String,Object>> postList = MAPPER.post.search(searcherUid, sql, pageSize, offset);
 
         if (postList.isEmpty()) return Response.failure(CommonErr.NO_DATA);
 

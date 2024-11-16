@@ -108,9 +108,17 @@ public interface PostMapper extends BaseMapper<Post> {
             "LEFT JOIN `post_like` PL ON PL.`post_id`=P.`id` AND PL.`uid`=#{uid} " +
             "LEFT JOIN `post_bookmark` PB ON PB.`post_id`=P.`id` AND PB.`uid`=#{uid} " +
             "WHERE ${sql} " +
-            "LIMIT #{offset},#{pageSize}"
+            "ORDER BY P.`id` DESC LIMIT #{offset},#{pageSize}"
     )
     List<Map<String,Object>> search(int uid, String sql, int pageSize, int offset);
+
+    //获取版块下帖子个数
+    @Select("SELECT `post_num` FROM `section` WHERE `id`=#{sectionId}")
+    int countPostNumInSection(Integer sectionId);
+
+    //获取版块下精选帖子个数
+    @Select("SELECT COUNT(1) FROM `post` WHERE `section_id`=#{sectionId} AND `status`=1")
+    int countSelectedPostNumInSection(Integer sectionId);
 
     //获取帖子内容
     @Select("SELECT * FROM `post` WHERE `id`=#{id}")

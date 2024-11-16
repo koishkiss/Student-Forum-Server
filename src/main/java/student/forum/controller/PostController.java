@@ -3,6 +3,7 @@ package student.forum.controller;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
+import student.forum.model.bo.AllPageSearchBO;
 import student.forum.model.bo.SinglePageSearchBO;
 import student.forum.model.po.Post;
 import student.forum.model.po.User;
@@ -34,15 +35,26 @@ public class PostController {
         return postService.getNewPosts(user, postPage);
     }
 
+    //按版块分页获取帖子
+    @PostMapping("/post/get")
+    public Response selectPostsBySectionId(
+            @RequestAttribute(name = "user") User user,
+            @RequestParam(name = "sectionId") Integer sectionId,
+            @RequestParam(name = "onlySelected", defaultValue = "false") Boolean onlySelected,
+            @RequestBody AllPageSearchBO<Map<String,Object>> pageSearch) {
+        return postService.selectPostsBySectionId(user.getUid(), sectionId, onlySelected, pageSearch);
+    }
+
     //按不同方式检索帖子
     @GetMapping("/post/get")
-    public Response selectPostsBySectionId(
-            HttpServletRequest request,
+    public Response selectPosts(
+            @RequestAttribute(name = "user") User user,
             @RequestParam(name = "uid",required = false) Integer uid,
             @RequestParam(name = "sectionId",required = false) Integer sectionId,
             @RequestParam(name = "search",required = false) String search,
-            @RequestParam(name = "offset",defaultValue = "0") Integer offset) {
-        return postService.selectPosts(((User) request.getAttribute("user")).getUid(), uid, sectionId, search, offset);
+            @RequestParam(name = "offset",defaultValue = "0") Integer offset,
+            @RequestParam(name = "pageSize",defaultValue = "10") Integer pageSize) {
+        return postService.selectPosts(user.getUid(), uid, sectionId, search, offset, pageSize);
     }
 
     //获取某用户喜欢的\收藏的\看过的帖子
