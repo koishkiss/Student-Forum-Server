@@ -50,7 +50,6 @@ public class Section {
         returnMap.put("memberNum",memberNum);
         returnMap.put("postNum",postNum);
         returnMap.put("classify",MAPPER.classify.selectById(classify).getName());
-        returnMap.put("moderator",moderator);
         returnMap.put("adminList",getAdminList());
         returnMap.put("createTime",createTime);
         SectionJoin sectionJoin = uid != -1 ? MAPPER.section_join.getInfo(id,uid) : null;
@@ -65,15 +64,23 @@ public class Section {
     }
 
     public List<Map<String,Object>> getAdminList() {
+        List<Map<String, Object>> adminList = new ArrayList<>();
         if (admin.length() > 2) {
-            List<Map<String, Object>> adminList = MAPPER.user.selectUserSimpleInfoListByUidList(ArrayUtil.JsonStringToString(admin));
+            adminList.addAll(MAPPER.user.selectUserSimpleInfoListByUidList(ArrayUtil.JsonStringToString(admin)));
             for (Map<String, Object> i : adminList) {
                 i.put("avatarURL", FileUtil.getFileURL(i.get("avatarURL").toString(), FileType.IMAGE));
+                i.put("identity",1);
             }
-            return adminList;
-        } else {
-            return new ArrayList<>();
         }
+        if (moderator != -1) {
+            Map<String, Object> moderatorInfo = MAPPER.user.selectUserSimpleInfoByUid(moderator);
+            if (moderator != null) {
+                moderatorInfo.put("avatarURL", FileUtil.getFileURL(moderatorInfo.get("avatarURL").toString(), FileType.IMAGE));
+                moderatorInfo.put("identity", 2);
+                adminList.add(0,moderatorInfo);
+            }
+        }
+        return adminList;
     }
 
     @SneakyThrows

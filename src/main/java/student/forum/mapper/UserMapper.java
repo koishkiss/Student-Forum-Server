@@ -34,6 +34,9 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT * FROM `user` WHERE `uid`=#{uid}")
     User selectUserByUid(int uid);
 
+    @Select("SELECT `uid`,`nickname`,`avatar` AS `avatarURL` FROM `user` WHERE `uid`=#{uid}")
+    Map<String,Object> selectUserSimpleInfoByUid(Integer uid);
+
     @Select("SELECT `uid`,`nickname`,`avatar` AS `avatarURL` FROM `user` WHERE `uid` IN ${uidList}")
     List<Map<String,Object>> selectUserSimpleInfoListByUidList(String uidList);
 
