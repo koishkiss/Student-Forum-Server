@@ -29,6 +29,7 @@ public class ConnectInterceptor implements HandlerInterceptor {
             "/section/info",
             "/post/get/recommend",
             "/post/get",
+            "/classify",
             "/section/classify",
             "/user/other/info"
     };

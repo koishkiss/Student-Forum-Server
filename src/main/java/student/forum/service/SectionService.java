@@ -7,6 +7,7 @@ import student.forum.model.CONSTANT.MAPPER;
 import student.forum.model.ENUM.FileType;
 import student.forum.model.dto.JoinedSectionDTO;
 import student.forum.model.po.Section;
+import student.forum.model.po.SectionJoin;
 import student.forum.model.po.User;
 import student.forum.model.vo.CommonErr;
 import student.forum.model.vo.Response;
@@ -156,11 +157,15 @@ public class SectionService {
     }
 
     public Response cancelJoinSection(int sectionId, int uid) {
-        if (MAPPER.section_join.judgeExists(sectionId,uid)) {
+        SectionJoin sectionJoin = MAPPER.section_join.getInfo(sectionId,uid);
+        if (sectionJoin == null) {
+            return Response.failure(CommonErr.OPERATE_REPEAT.setMsg("不可以重复取关哦"));
+        } else if (sectionJoin.getIdentity() != 0) {
+            return Response.failure(CommonErr.NO_AUTHORITY.setMsg("管理员权限不能取关哦"));
+        } else {
             MAPPER.section_join.cancel(sectionId, uid);
             return Response.ok();
         }
-        return Response.failure(CommonErr.OPERATE_REPEAT.setMsg("不可以重复取关哦"));
     }
 
 }
