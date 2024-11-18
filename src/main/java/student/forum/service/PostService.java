@@ -61,7 +61,13 @@ public class PostService {
         });
 
         for (Map<String,Object> post : postList) {
-            post.put("content", TextUtil.truncatedText(50,HtmlHandleUtil.escapeToHTML(post.get("content"))));
+            post.put("content",
+                    TextUtil.truncatedLinesAndWords(
+                            5,
+                            50,
+                            HtmlHandleUtil.escapeToHTML(post.get("content"))
+                    )
+            );
             if (post.get("cover") != null) {
                 post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
             }
@@ -97,7 +103,13 @@ public class PostService {
         });
 
         for (Map<String,Object> post : postList) {
-            post.put("content", TextUtil.truncatedText(50,HtmlHandleUtil.escapeToHTML(post.get("content"))));
+            post.put("content",
+                    TextUtil.truncatedLinesAndWords(
+                            5,
+                            50,
+                            HtmlHandleUtil.escapeToHTML(post.get("content"))
+                    )
+            );
             if (post.get("cover") != null) {
                 post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
             }
@@ -120,7 +132,13 @@ public class PostService {
         if (postList.isEmpty()) return Response.failure(CommonErr.NO_DATA);
 
         for (Map<String,Object> post : postList) {
-            post.put("content", TextUtil.truncatedText(50,HtmlHandleUtil.escapeToHTML(post.get("content"))));
+            post.put("content",
+                    TextUtil.truncatedLinesAndWords(
+                            5,
+                            50,
+                            HtmlHandleUtil.escapeToHTML(post.get("content"))
+                    )
+            );
             if (post.get("cover") != null) {
                 post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
             }
@@ -142,7 +160,13 @@ public class PostService {
         if (postList.isEmpty()) return Response.failure(CommonErr.NO_DATA);
 
         for (Map<String,Object> post : postList) {
-            post.put("content", TextUtil.truncatedText(50,HtmlHandleUtil.escapeToHTML(post.get("content"))));
+            post.put("content",
+                    TextUtil.truncatedLinesAndWords(
+                            5,
+                            50,
+                            HtmlHandleUtil.escapeToHTML(post.get("content"))
+                    )
+            );
             if (post.get("cover") != null) {
                 post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
             }
