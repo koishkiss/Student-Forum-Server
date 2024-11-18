@@ -51,7 +51,7 @@ public class HtmlHandleUtil {
         return HtmlUtils.htmlEscape(html);
     }
 
-    public static String escapeToHTML(String text) {
-        return HtmlUtils.htmlUnescape(text);
+    public static String escapeToHTML(Object text) {
+        return HtmlUtils.htmlUnescape(text.toString());
     }
 }

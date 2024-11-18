@@ -16,6 +16,7 @@ import student.forum.model.vo.SinglePageVO;
 import student.forum.util.ConditionalSqlMaker;
 import student.forum.util.FileUtil;
 import student.forum.util.HtmlHandleUtil;
+import student.forum.util.TextUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class PostService {
         });
 
         for (Map<String,Object> post : postList) {
-            post.put("content", HtmlHandleUtil.escapeToHTML((String) post.get("content")));
+            post.put("content", TextUtil.truncatedText(50,HtmlHandleUtil.escapeToHTML(post.get("content"))));
             if (post.get("cover") != null) {
                 post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
             }
@@ -96,7 +97,7 @@ public class PostService {
         });
 
         for (Map<String,Object> post : postList) {
-            post.put("content", HtmlHandleUtil.escapeToHTML((String) post.get("content")));
+            post.put("content", TextUtil.truncatedText(50,HtmlHandleUtil.escapeToHTML(post.get("content"))));
             if (post.get("cover") != null) {
                 post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
             }
@@ -119,7 +120,7 @@ public class PostService {
         if (postList.isEmpty()) return Response.failure(CommonErr.NO_DATA);
 
         for (Map<String,Object> post : postList) {
-            post.put("content", HtmlHandleUtil.escapeToHTML((String) post.get("content")));
+            post.put("content", TextUtil.truncatedText(50,HtmlHandleUtil.escapeToHTML(post.get("content"))));
             if (post.get("cover") != null) {
                 post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
             }
@@ -141,7 +142,7 @@ public class PostService {
         if (postList.isEmpty()) return Response.failure(CommonErr.NO_DATA);
 
         for (Map<String,Object> post : postList) {
-            post.put("content", HtmlHandleUtil.escapeToHTML((String) post.get("content")));
+            post.put("content", TextUtil.truncatedText(50,HtmlHandleUtil.escapeToHTML(post.get("content"))));
             if (post.get("cover") != null) {
                 post.put("coverURL", FileUtil.getFileURL((String) post.get("cover"), FileType.IMAGE));
             }
