@@ -1,20 +1,16 @@
 package student.forum.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import student.forum.model.CONSTANT.MAPPER;
-import student.forum.model.CONSTANT.VALUE;
 import student.forum.model.ENUM.FileType;
+import student.forum.model.bo.AllPageSearchBO;
 import student.forum.model.po.Comment;
+import student.forum.model.vo.AllPageVO;
 import student.forum.model.vo.CommonErr;
 import student.forum.model.vo.Response;
 import student.forum.util.FileUtil;
 import student.forum.util.HtmlHandleUtil;
-import student.forum.util.PageUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,38 +24,27 @@ public class CommentService {
         return Response.ok();
     }
 
-    public Response getCommentListByPost(int uid, Integer postId,Integer page) {
-        page = page < 1 ? 1 : page;
-        int commentNum = MAPPER.post.getCommentNumById(postId);
-        int pageNum = PageUtil.calculatePageNum(commentNum,VALUE.page_size);
-        int offset = PageUtil.calculateOffset(page,VALUE.page_size);
+    public Response getCommentListByPost(int uid, Integer postId, AllPageSearchBO<Map<String,Object>> pageSearch) {
+        List<Map<String,Object>> commentList = pageSearch.doSearch(new AllPageSearchBO.Method<>() {
+            @Override
+            public Integer getDataNum() {
+                return MAPPER.post.getCommentNumById(postId);
+            }
 
-        @Getter
-        @NoArgsConstructor
-        @AllArgsConstructor
-        class CommentPageVO {
-            private List<Map<String,Object>> commentList;
-            private int pageNum;
-            private int page;
-        }
+            @Override
+            public List<Map<String, Object>> getData(Integer offset, Integer pageSize) {
+                return MAPPER.comment.selectFromPost(uid, postId, pageSize, offset);
+            }
+        });
 
-        if (commentNum == 0) {
-            return Response.success(new CommentPageVO(new ArrayList<>(),pageNum,page));
-        }
-        else if (page > pageNum) {
-            return Response.failure(CommonErr.THIS_IS_LAST_PAGE);
-        }
-
-        List<Map<String,Object>> commentList = MAPPER.comment.selectFromPost(uid, postId, VALUE.page_size, offset);
-
-        int floorId = offset + 2;
+        int floorId = pageSearch.getOffset() + 2;
         for (Map<String,Object> comment : commentList) {
-            comment.put("content", HtmlHandleUtil.escapeToHTML((String) comment.get("content")));
-            comment.put("avatarURL", FileUtil.getFileURL((String) comment.get("avatar"), FileType.IMAGE));
+            comment.put("content", HtmlHandleUtil.escapeToHTML(comment.get("content")));
+            comment.put("avatarURL", FileUtil.getFileURL((String) comment.get("avatarURL"), FileType.IMAGE));
             comment.put("floorId",floorId++);
         }
 
-        return Response.success(new CommentPageVO(commentList,pageNum,page));
+        return Response.success(new AllPageVO<>(pageSearch));
     }
 
     //点赞评论

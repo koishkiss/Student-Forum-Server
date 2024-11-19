@@ -27,7 +27,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
                 "C.`reply_num` AS replyNum," +
                 "U.`authority`," +
                 "U.`nickname`," +
-                "U.`avatar`," +
+                "U.`avatar` AS avatarURL," +
                 "(U.`uid`=P.`uid`) AS isPoster," +
                 "(U.`uid`=S.`moderator`) AS isModerator," +
                 "CL.`like_time` AS likeTime " +

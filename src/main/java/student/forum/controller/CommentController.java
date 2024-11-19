@@ -3,10 +3,13 @@ package student.forum.controller;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
+import student.forum.model.bo.AllPageSearchBO;
 import student.forum.model.po.Comment;
 import student.forum.model.po.User;
 import student.forum.model.vo.Response;
 import student.forum.service.CommentService;
+
+import java.util.Map;
 
 @RestController
 public class CommentController {
@@ -21,12 +24,12 @@ public class CommentController {
     }
 
     //按帖子获取评论
-    @GetMapping("/comment/get")
+    @PostMapping("/comment/get")
     public Response getCommentListByPost(
-            HttpServletRequest request,
+            @RequestAttribute(name = "user") User user,
             @RequestParam(name = "postId") Integer postId,
-            @RequestParam(name = "page", defaultValue = "1") Integer page) {
-        return commentService.getCommentListByPost(((User) request.getAttribute("user")).getUid(), postId, page);
+            @RequestBody AllPageSearchBO<Map<String,Object>> pageSearch) {
+        return commentService.getCommentListByPost(user.getUid(), postId, pageSearch);
     }
 
     //点赞评论
