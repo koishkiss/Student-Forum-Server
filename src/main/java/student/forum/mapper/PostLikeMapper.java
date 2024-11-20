@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import student.forum.model.po.PostLike;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,4 +50,32 @@ public interface PostLikeMapper extends BaseMapper<PostLike> {
     )
     List<Map<String,Object>> getLikeByUid(int uid, int offset, int pageSize);
 
+    @Select("SELECT " +
+            "PL.`post_id` AS `postId`," +
+            "PL.`uid` AS `uid`," +
+            "PL.`like_time` AS `likeTime`," +
+            "SUBSTRING(P.`content`,1,50) AS `content`," +
+            "U.`nickname` " +
+            "FROM `post_like` PL " +
+            "JOIN `post` P ON P.`uid`=#{uid} AND PL.`post_id`=P.`id` " +
+            "JOIN `user` U ON U.`uid`=PL.`uid` " +
+            "ORDER BY PL.`like_time` DESC " +
+            "LIMIT #{pageSize}"
+    )
+    List<Map<String, Object>> getMyObtainedLikes(Integer uid, Integer pageSize);
+
+    @Select("SELECT " +
+                "PL.`post_id` AS `postId`," +
+                "PL.`uid` AS `uid`," +
+                "PL.`like_time` AS `likeTime`," +
+                "SUBSTRING(P.`content`,1,50) AS `content`," +
+                "U.`nickname` " +
+            "FROM `post_like` PL " +
+            "JOIN `post` P ON P.`uid`=#{uid} AND PL.`post_id`=P.`id` " +
+            "JOIN `user` U ON U.`uid`=PL.`uid` " +
+            "WHERE PL.`like_time`<#{startDate}" +
+            "ORDER BY PL.`like_time` DESC " +
+            "LIMIT #{pageSize}"
+    )
+    List<Map<String, Object>> getMyObtainedLikes(Integer uid, Integer pageSize, Date startDate);
 }

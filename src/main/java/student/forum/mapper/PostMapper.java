@@ -112,6 +112,10 @@ public interface PostMapper extends BaseMapper<Post> {
     )
     List<Map<String,Object>> search(int uid, String sql, int pageSize, int offset);
 
+    //获取热门帖子(标题、id即可)
+    @Select("SELECT `title`,`id` FROM `post` ORDER BY `like_num` DESC,`view_num` DESC LIMIT #{top}")
+    List<Map<String,Object>> getTopPosts(Integer top);
+
     //获取版块下帖子个数
     @Select("SELECT `post_num` FROM `section` WHERE `id`=#{sectionId}")
     int countPostNumInSection(Integer sectionId);
