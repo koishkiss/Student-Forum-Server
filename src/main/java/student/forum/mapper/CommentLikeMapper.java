@@ -43,7 +43,7 @@ public interface CommentLikeMapper extends BaseMapper<CommentLike> {
             "ORDER BY CL.`like_time` DESC " +
             "LIMIT #{pageSize}"
     )
-    List<Map<String,Object>> getMyObtainedLikes(Integer uid, Integer pageSize);
+    List<Map<String,Object>> getMyObtainedLikesInFirstTime(Integer uid, Integer pageSize);
 
     @Select("SELECT " +
             "CL.`comment_id` AS `commentId`," +
@@ -55,7 +55,7 @@ public interface CommentLikeMapper extends BaseMapper<CommentLike> {
             "FROM `comment_like` CL " +
             "JOIN `comment` C ON C.`uid`=#{uid} AND CL.`comment_id`=C.`id` " +
             "JOIN `user` U ON U.`uid`=CL.`uid` " +
-            "WHERE CL.`like_time`>#{startDate}" +
+            "WHERE CL.`like_time`<#{startDate}" +
             "ORDER BY CL.`like_time` DESC " +
             "LIMIT #{pageSize}"
     )

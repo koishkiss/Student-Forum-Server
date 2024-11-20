@@ -26,10 +26,10 @@ public class DataService {
         page.doSearch(new SinglePageSearchBO.Method<>() {
             @Override
             public List<Map<String, Object>> firstSearch(Integer pageSize) {
-                List<Map<String, Object>> likeInComment = MAPPER.comment_like.getMyObtainedLikes(user.getUid(), pageSize);
+                List<Map<String, Object>> likeInComment = MAPPER.comment_like.getMyObtainedLikesInFirstTime(user.getUid(), pageSize);
                 for (Map<String, Object> i : likeInComment) i.put("type", "comment");
 
-                List<Map<String, Object>> likeInPost = MAPPER.post_like.getMyObtainedLikes(user.getUid(), pageSize);
+                List<Map<String, Object>> likeInPost = MAPPER.post_like.getMyObtainedLikesInFirstTime(user.getUid(), pageSize);
                 for (Map<String, Object> i : likeInPost) i.put("type", "post");
 
                 return mergeListAndSetLastData(likeInComment, likeInPost, pageSize);
@@ -38,12 +38,12 @@ public class DataService {
             @Override
             public List<Map<String, Object>> searchTowardBack(Date[] startPos, Integer pageSize) {
                 List<Map<String, Object>> likeInComment = startPos[0] == null ?
-                        MAPPER.comment_like.getMyObtainedLikes(user.getUid(), pageSize) :
+                        MAPPER.comment_like.getMyObtainedLikesInFirstTime(user.getUid(), pageSize) :
                         MAPPER.comment_like.getMyObtainedLikes(user.getUid(), pageSize, startPos[0]);
                 for (Map<String, Object> i : likeInComment) i.put("type", "comment");
 
                 List<Map<String, Object>> likeInPost = startPos[1] == null ?
-                        MAPPER.post_like.getMyObtainedLikes(user.getUid(), pageSize) :
+                        MAPPER.post_like.getMyObtainedLikesInFirstTime(user.getUid(), pageSize) :
                         MAPPER.post_like.getMyObtainedLikes(user.getUid(), pageSize, startPos[1]);
                 for (Map<String, Object> i : likeInPost) i.put("type", "post");
 
@@ -69,13 +69,13 @@ public class DataService {
                 }
 
                 boolean commentLastDataHasUpdate = false, postLastDataHasUpdate = false;
-                for (int i = likeInPost.size()-1; i >= 0 && !(commentLastDataHasUpdate && postLastDataHasUpdate); i--) {
-                    if (!commentLastDataHasUpdate && likeInPost.get(i).get("type").equals("comment")) {
-                        lastData[0] = (Date) likeInPost.get(i).get("likeTime");
+                for (int i = mergedList.size()-1; i >= 0 && !(commentLastDataHasUpdate && postLastDataHasUpdate); i--) {
+                    if (!commentLastDataHasUpdate && mergedList.get(i).get("type").equals("comment")) {
+                        lastData[0] = (Date) mergedList.get(i).get("likeTime");
                         commentLastDataHasUpdate = true;
                     }
-                    if (!postLastDataHasUpdate && likeInPost.get(i).get("type").equals("post")) {
-                        lastData[1] = (Date) likeInPost.get(i).get("likeTime");
+                    if (!postLastDataHasUpdate && mergedList.get(i).get("type").equals("post")) {
+                        lastData[1] = (Date) mergedList.get(i).get("likeTime");
                         postLastDataHasUpdate = true;
                     }
                 }

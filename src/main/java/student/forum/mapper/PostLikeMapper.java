@@ -62,7 +62,7 @@ public interface PostLikeMapper extends BaseMapper<PostLike> {
             "ORDER BY PL.`like_time` DESC " +
             "LIMIT #{pageSize}"
     )
-    List<Map<String, Object>> getMyObtainedLikes(Integer uid, Integer pageSize);
+    List<Map<String, Object>> getMyObtainedLikesInFirstTime(Integer uid, Integer pageSize);
 
     @Select("SELECT " +
                 "PL.`post_id` AS `postId`," +
