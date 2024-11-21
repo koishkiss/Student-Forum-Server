@@ -34,6 +34,11 @@ public class Reply {
         return commentId != null && Objects.equals(MAPPER.reply.getCommentIdById(callId), commentId);
     }
 
+    public void addReplyPerson() {
+        String nickname = MAPPER.reply.getReplyMakerNickname(callId);
+        content = "回复 " + nickname + ": " + content;
+    }
+
     public void setContentAsText() {
         content = HtmlHandleUtil.escapeFromHTML(content);
     }

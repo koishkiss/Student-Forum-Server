@@ -28,4 +28,11 @@ public class DataController {
         return dataService.getMyObtainedLike(user, page);
     }
 
+    @PostMapping("/user/mine/message")
+    public Response getMyMessage(
+            @RequestAttribute(name = "user") User user,
+            @RequestBody SinglePageSearchBO<Map<String,Object>, Date[]> page) {
+        return dataService.getMyMessage(user.getUid(),page);
+    }
+
 }

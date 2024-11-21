@@ -28,6 +28,7 @@ public class ReplyService {
     public Response giveNewReplyOnOther(int uid, Reply reply) {
         reply.setUid(uid);
         if (reply.checkSameCommentWithCallId()) {
+            reply.addReplyPerson();
             MAPPER.reply.replyOtherReply(reply);
             return Response.ok();
         } else {
@@ -44,9 +45,9 @@ public class ReplyService {
 
         int orderId = 1;
         Map<Object,Integer> idToOrderIdMap = new HashMap<>();
-        idToOrderIdMap.put(-1,-1);
+        idToOrderIdMap.put(-1,null);
         for (Map<String, Object> reply : replyList) {
-            reply.put("content", HtmlHandleUtil.escapeToHTML((String) reply.get("content")));
+            reply.put("content", HtmlHandleUtil.escapeToHTML(reply.get("content")));
             reply.put("avatarURL", FileUtil.getFileURL((String) reply.get("avatar"), FileType.IMAGE));
             idToOrderIdMap.put(reply.get("id"),orderId);
             reply.put("orderId",orderId++);

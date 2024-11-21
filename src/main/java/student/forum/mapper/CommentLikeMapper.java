@@ -31,12 +31,12 @@ public interface CommentLikeMapper extends BaseMapper<CommentLike> {
     void disLiked(Integer uid, Integer commentId);
 
     @Select("SELECT " +
-            "CL.`comment_id` AS `commentId`," +
-            "CL.`uid` AS `uid`," +
-            "CL.`like_time` AS `likeTime`," +
-            "SUBSTRING(C.`content`,1,50) AS `content`," +
-            "C.`post_id` AS `postId`," +
-            "U.`nickname` " +
+                "CL.`comment_id` AS `commentId`," +
+                "CL.`uid` AS `uid`," +
+                "CL.`like_time` AS `likeTime`," +
+                "SUBSTRING(C.`content`,1,50) AS `content`," +
+                "C.`post_id` AS `postId`," +
+                "U.`nickname` " +
             "FROM `comment_like` CL " +
             "JOIN `comment` C ON C.`uid`=#{uid} AND CL.`comment_id`=C.`id` " +
             "JOIN `user` U ON U.`uid`=CL.`uid` " +
@@ -46,12 +46,12 @@ public interface CommentLikeMapper extends BaseMapper<CommentLike> {
     List<Map<String,Object>> getMyObtainedLikesInFirstTime(Integer uid, Integer pageSize);
 
     @Select("SELECT " +
-            "CL.`comment_id` AS `commentId`," +
-            "CL.`uid` AS `uid`," +
-            "CL.`like_time` AS `likeTime`," +
-            "SUBSTRING(C.`content`,1,50) AS `content`," +
-            "C.`post_id` AS `postId`," +
-            "U.`nickname` " +
+                "CL.`comment_id` AS `commentId`," +
+                "CL.`uid` AS `uid`," +
+                "CL.`like_time` AS `likeTime`," +
+                "SUBSTRING(C.`content`,1,50) AS `content`," +
+                "C.`post_id` AS `postId`," +
+                "U.`nickname` " +
             "FROM `comment_like` CL " +
             "JOIN `comment` C ON C.`uid`=#{uid} AND CL.`comment_id`=C.`id` " +
             "JOIN `user` U ON U.`uid`=CL.`uid` " +
