@@ -15,7 +15,7 @@ public interface SectionJoinMapper extends BaseMapper<SectionJoin> {
     @Insert("INSERT INTO `section_join`(`section_id`,`uid`,`identity`) VALUES(#{sectionId},#{uid},#{identity});" +
             "UPDATE `section` SET `member_num`=`member_num`+1 WHERE `id`=#{sectionId};" +
             "UPDATE `user` SET `join_num`=`join_num`+1 WHERE `uid`=#{uid}")
-    void join(int sectionId, int uid, int identity);
+    void joinWithIdentity(int sectionId, int uid, int identity);
 
     @Delete("DELETE FROM `section_join` WHERE `section_id`=#{sectionId} AND `uid`=#{uid};" +
             "UPDATE `section` SET `member_num`=`member_num`-1 WHERE `id`=#{sectionId};" +

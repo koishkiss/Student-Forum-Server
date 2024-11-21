@@ -36,7 +36,7 @@ public class SectionService {
 
         if (beModerator) {
             int sectionId = MAPPER.section.getIdByName(newSection.getName());
-            MAPPER.section_join.join(sectionId,user.getUid(),2);
+            MAPPER.section_join.joinWithIdentity(sectionId,user.getUid(),2);
         }
         return Response.ok();
     }
