@@ -21,7 +21,7 @@ public interface PostViewMapper extends BaseMapper<PostView> {
     void viewed(Integer uid, Integer postId);
 
     @Select("SELECT " +
-                "PV.`post_id` AS `postId`," +
+                "PV.`post_id` AS `id`," +
                 "PV.`view_time` AS `viewTime`," +
                 "P.`section_id` AS `sectionId`," +
                 "P.`title`," +

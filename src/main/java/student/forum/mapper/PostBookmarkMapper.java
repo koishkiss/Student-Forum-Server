@@ -28,7 +28,7 @@ public interface PostBookmarkMapper extends BaseMapper<PostBookmarkMapper> {
     void disMarked(Integer uid, Integer postId);
 
     @Select("SELECT " +
-                "PB.`post_id` AS `postId`," +
+                "PB.`post_id` AS `id`," +
                 "PB.`mark_time` AS `markTime`," +
                 "P.`section_id` AS `sectionId`," +
                 "P.`title`," +

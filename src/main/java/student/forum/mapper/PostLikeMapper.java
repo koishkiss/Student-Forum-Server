@@ -30,7 +30,7 @@ public interface PostLikeMapper extends BaseMapper<PostLike> {
     void disLiked(Integer uid, Integer postId);
 
     @Select("SELECT " +
-                "PL.`post_id` AS `postId`," +
+                "PL.`post_id` AS `id`," +
                 "PL.`like_time` AS `likeTime`," +
                 "P.`section_id` AS `sectionId`," +
                 "P.`title`," +
