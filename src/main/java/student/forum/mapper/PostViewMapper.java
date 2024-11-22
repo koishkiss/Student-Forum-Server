@@ -37,6 +37,7 @@ public interface PostViewMapper extends BaseMapper<PostView> {
             "JOIN `post` P " +
             "ON P.`id`=PV.`post_id` " +
             "WHERE PV.`uid`=#{uid} " +
+            "ORDER BY `view_time` DESC " +
             "LIMIT #{offset},#{pageSize}"
     )
     List<Map<String,Object>> getViewByUid(int uid, int offset, int pageSize);

@@ -44,6 +44,7 @@ public interface PostBookmarkMapper extends BaseMapper<PostBookmarkMapper> {
             "JOIN `post` P " +
             "ON P.`id`=PB.`post_id` " +
             "WHERE PB.`uid`=#{uid} " +
+            "ORDER BY PB.`mark_time` DESC " +
             "LIMIT #{offset},#{pageSize}"
     )
     List<Map<String,Object>> getBookmarkByUid(int uid, int offset, int pageSize);

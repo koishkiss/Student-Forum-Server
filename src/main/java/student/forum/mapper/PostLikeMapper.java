@@ -46,6 +46,7 @@ public interface PostLikeMapper extends BaseMapper<PostLike> {
             "JOIN `post` P " +
             "ON P.`id`=PL.`post_id` " +
             "WHERE PL.`uid`=#{uid} " +
+            "ORDER BY PL.`like_time` DESC " +
             "LIMIT #{offset},#{pageSize}"
     )
     List<Map<String,Object>> getLikeByUid(int uid, int offset, int pageSize);
