@@ -52,10 +52,12 @@ public interface ReplyMapper extends BaseMapper<Reply> {
                 "R.`reply_time` AS `releaseTime`," +
                 "SUBSTRING(R.`content`,1,50) AS `replyContent`," +
                 "SUBSTRING(C.`content`,1,50) AS `myContent`," +
-                "U.`nickname` " +
+                "U.`nickname`," +
+                "P.`id` " +
             "FROM `reply` R " +
             "JOIN `comment` C ON R.`comment_id`=C.`id` AND C.`uid`=#{uid} " +
             "JOIN `user` U ON U.`uid`=R.`uid` " +
+            "JOIN `post` P ON C.`post_id`=P.`id` " +
             "WHERE R.`call_id`=-1 AND R.`uid`<>#{uid} " +
             "ORDER BY R.`reply_time` DESC " +
             "LIMIT #{pageSize}"
@@ -69,10 +71,12 @@ public interface ReplyMapper extends BaseMapper<Reply> {
                 "R.`reply_time` AS `releaseTime`," +
                 "SUBSTRING(R.`content`,1,50) AS `replyContent`," +
                 "SUBSTRING(C.`content`,1,50) AS `myContent`," +
-                "U.`nickname` " +
+                "U.`nickname`," +
+                "P.`id` " +
             "FROM `reply` R " +
             "JOIN `comment` C ON R.`comment_id`=C.`id` AND C.`uid`=#{uid} " +
             "JOIN `user` U ON U.`uid`=R.`uid` " +
+            "JOIN `post` P ON C.`post_id`=P.`id` " +
             "WHERE R.`reply_time`<#{startDate} AND R.`call_id`=-1 AND R.`uid`<>#{uid} " +
             "ORDER BY R.`reply_time` DESC " +
             "LIMIT #{pageSize}"
@@ -86,10 +90,13 @@ public interface ReplyMapper extends BaseMapper<Reply> {
                 "R1.`reply_time` AS `releaseTime`," +
                 "SUBSTRING(R1.`content`,1,50) AS `replyContent`," +
                 "SUBSTRING(R2.`content`,1,50) AS `myContent`," +
-                "U.`nickname` " +
+                "U.`nickname`," +
+                "P.`id` " +
             "FROM `reply` R1 " +
             "JOIN `reply` R2 ON R1.`id`=R2.`call_id` AND R2.`uid`=#{uid} " +
             "JOIN `user` U ON U.`uid`=R1.`uid` " +
+            "JOIN `comment` C ON R1.`comment_id`=C.`id` " +
+            "JOIN `post` P ON C.`post_id`=P.`id` " +
             "WHERE R1.`uid`<>#{uid} " +
             "ORDER BY R1.`reply_time` DESC " +
             "LIMIT #{pageSize}"
@@ -103,10 +110,13 @@ public interface ReplyMapper extends BaseMapper<Reply> {
                 "R1.`reply_time` AS `releaseTime`," +
                 "SUBSTRING(R1.`content`,1,50) AS `replyContent`," +
                 "SUBSTRING(R2.`content`,1,50) AS `myContent`," +
-                "U.`nickname` " +
+                "U.`nickname`," +
+                "P.`id` " +
             "FROM `reply` R1 " +
             "JOIN `reply` R2 ON R1.`id`=R2.`call_id` AND R2.`uid`=#{uid} " +
             "JOIN `user` U ON U.`uid`=R1.`uid` " +
+            "JOIN `comment` C ON R1.`comment_id`=C.`id` " +
+            "JOIN `post` P ON C.`post_id`=P.`id` " +
             "WHERE R1.`reply_time`<#{startDate} R1.`uid`<>#{uid} " +
             "ORDER BY R1.`reply_time` DESC " +
             "LIMIT #{pageSize}"
