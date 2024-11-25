@@ -92,7 +92,7 @@ public class DataService {
         });
 
         for (Map<String,Object> i : resultList) {
-            i.put("content", TextUtil.truncatedWords(30, (String) i.get("content")));
+            i.put("content", TextUtil.truncatedWords(11, (String) i.get("content")));
         }
 
         return Response.success(new SinglePageVO<>(page));
@@ -186,8 +186,8 @@ public class DataService {
         });
 
         for (Map<String,Object> i : resultList) {
-            i.put("myContent", TextUtil.truncatedWords(30, (String) i.get("myContent")));
-            i.put("replyContent", TextUtil.truncatedWords(30, (String) i.get("replyContent")));
+            i.put("myContent", TextUtil.truncatedWords(11, (String) i.get("myContent")));
+            i.put("replyContent", TextUtil.truncatedWords(50, (String) i.get("replyContent")));
         }
 
         return Response.success(new SinglePageVO<>(page));

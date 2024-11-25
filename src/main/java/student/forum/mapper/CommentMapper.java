@@ -19,8 +19,8 @@ public interface CommentMapper extends BaseMapper<Comment> {
     void make(Comment comment);
 
     @Select("SELECT " +
-                "C.`id`," +
-                "C.`post_id` AS postId," +
+                "C.`id` AS `commentId`," +
+                "C.`post_id` AS `postId`," +
                 "C.`uid`," +
                 "C.`content`," +
                 "C.`comment_time` AS commentTime," +
