@@ -18,6 +18,9 @@ public class ReplyService {
 
     //回复评论
     public Response giveNewReplyOnComment(int uid, Reply reply) {
+        if (reply.getContent().isBlank()) {
+            return Response.failure(CommonErr.PARAM_WRONG.setMsg("内容不可为空!"));
+        }
         reply.setUid(uid);
         reply.setContentAsText();
         MAPPER.reply.replyComment(reply);
@@ -26,6 +29,9 @@ public class ReplyService {
 
     //回复另一个回复
     public Response giveNewReplyOnOther(int uid, Reply reply) {
+        if (reply.getContent().isBlank()) {
+            return Response.failure(CommonErr.PARAM_WRONG.setMsg("内容不可为空!"));
+        }
         reply.setUid(uid);
         if (reply.checkSameCommentWithCallId()) {
             reply.addReplyPerson();

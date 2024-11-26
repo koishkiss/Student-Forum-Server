@@ -18,6 +18,9 @@ import java.util.Map;
 public class CommentService {
 
     public Response makeNewComment(int uid, Comment comment) {
+        if (comment.getContent().isBlank()) {
+            return Response.failure(CommonErr.PARAM_WRONG.setMsg("内容不可为空!"));
+        }
         comment.setUid(uid);
         comment.setContentAsText();
         MAPPER.comment.make(comment);
