@@ -50,8 +50,15 @@ public class Post {
         returnMap.put("postId",id);
         returnMap.put("sectionId",sectionId);
         returnMap.put("uid",uid);
+        User user = MAPPER.user.selectUserByUid(uid);
+        int sectionModerator = MAPPER.section.getModeratorBySection(sectionId);
+        returnMap.put("avatarURL", user.getAvatarURL());
+        returnMap.put("nickname", user.getNickname());
+        returnMap.put("isModerator", uid == sectionModerator);
         returnMap.put("title",title);
-        returnMap.put("coverURL", FileUtil.getFileURL(cover, FileType.IMAGE));
+        if (cover != null) {
+            returnMap.put("coverURL", FileUtil.getFileURL(cover, FileType.IMAGE));
+        }
         //将text转义为html
         if (content != null) {
             setContentAsHTML();
