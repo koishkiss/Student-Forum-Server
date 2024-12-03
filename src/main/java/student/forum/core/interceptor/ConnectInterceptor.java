@@ -32,7 +32,9 @@ public class ConnectInterceptor implements HandlerInterceptor {
             "/classify",
             "/section/classify",
             "/user/other/info",
-            "/popular/active/"
+            "/popular/active/",
+            "/post/view",
+            "/comment/get"
     };
 
     //对管理员开放的接口
