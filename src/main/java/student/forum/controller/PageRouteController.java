@@ -13,7 +13,17 @@ public class PageRouteController {
 
     @GetMapping("/main")
     public String mainPage() {
-        return "forward:/";
+        return "forward:/index.html";
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "forward:/index.html";
+    }
+
+    @GetMapping("/post")
+    public String postPage() {
+        return "forward:/index.html";
     }
 
 }

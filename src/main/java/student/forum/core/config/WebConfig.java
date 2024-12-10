@@ -24,6 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/error",
                         "/",
                         "/main",
+                        "/login",
                         "/index.html",
                         "/assets/**",
                         VALUE.img_web+"**",
