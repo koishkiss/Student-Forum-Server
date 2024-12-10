@@ -22,6 +22,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/favicon.ico",
                         "/error",
+                        "/",
+                        "/main",
+                        "/index.html",
+                        "/assets/**",
                         VALUE.img_web+"**",
                         VALUE.video_web+"**",
                         VALUE.audio_web+"**"
