@@ -41,7 +41,8 @@ public class ConnectInterceptor implements HandlerInterceptor {
     private static final String[] FOR_ADMIN = {
             "/section/create",
             "/section/update",
-            "/section/member"
+            "/section/member",
+            "/classify/add"
     };
 
     @Override

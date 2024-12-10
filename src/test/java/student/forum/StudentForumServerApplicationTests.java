@@ -16,8 +16,8 @@ class StudentForumServerApplicationTests {
 
 	@Test
 	void addTestAccount() {
-		MAPPER.user.register("202000300514", BCrypt.hashpw("123456",BCrypt.gensalt()), "202000300514");
-		MAPPER.user.register("202051400514", BCrypt.hashpw("654321",BCrypt.gensalt()), "202051400514");
+//		MAPPER.user.register("202000300514", BCrypt.hashpw("123456",BCrypt.gensalt()), "202000300514");
+//		MAPPER.user.register("202051400514", BCrypt.hashpw("654321",BCrypt.gensalt()), "202051400514");
 	}
 
 }

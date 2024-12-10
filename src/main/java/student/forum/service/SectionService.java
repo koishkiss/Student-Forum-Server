@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import student.forum.model.CONSTANT.MAPPER;
 import student.forum.model.ENUM.FileType;
 import student.forum.model.dto.JoinedSectionDTO;
+import student.forum.model.po.Classify;
 import student.forum.model.po.Section;
 import student.forum.model.po.SectionJoin;
 import student.forum.model.po.User;
@@ -116,6 +117,18 @@ public class SectionService {
 
     public Response getAllClassify() {
         return Response.success(MAPPER.classify.selectList(new QueryWrapper<>()));
+    }
+
+    public Response addNewClassify(Classify classify) {
+        classify.setId(null);
+        if (classify.getName() == null || classify.getName().isBlank()) {
+            return Response.failure(CommonErr.PARAM_WRONG.setMsg("分区标题不可为空!"));
+        }
+        if (MAPPER.classify.judgeExistsByName(classify.getName())) {
+            return Response.failure(CommonErr.NO_AUTHORITY.setMsg("该分区标题已存在!"));
+        }
+        MAPPER.classify.insert(classify);
+        return Response.ok();
     }
 
     public Response getAllSectionByClassify(Integer uid,Integer classifyId) {

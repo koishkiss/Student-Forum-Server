@@ -4,6 +4,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import student.forum.model.po.Classify;
 import student.forum.model.po.Section;
 import student.forum.model.po.User;
 import student.forum.model.vo.Response;
@@ -65,6 +66,12 @@ public class SectionController {
     @GetMapping("/classify")
     public Response getAllClassify() {
         return sectionService.getAllClassify();
+    }
+
+    //新建版块分类
+    @PostMapping("/classify/add")
+    public Response addNewClassify(@RequestBody Classify classify) {
+        return sectionService.addNewClassify(classify);
     }
 
     //根据分类获取版块

@@ -13,4 +13,7 @@ public interface ClassifyMapper extends BaseMapper<Classify> {
     @Select("SELECT EXISTS(SELECT 1 FROM `classify` WHERE `id`=#{id})")
     boolean judgeExistsById(Integer id);
 
+    @Select("SELECT EXISTS(SELECT 1 FROM `classify` WHERE `name`=#{name})")
+    boolean judgeExistsByName(String name);
+
 }
