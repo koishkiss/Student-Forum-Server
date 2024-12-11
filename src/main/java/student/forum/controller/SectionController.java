@@ -89,6 +89,12 @@ public class SectionController {
         return sectionService.getMyJoinedSection(user.getUid());
     }
 
+    @GetMapping("/section/other")
+    public Response getOtherJoinedSection(
+            @RequestParam(name = "uid") Integer uid) {
+        return sectionService.getMyJoinedSection(uid);
+    }
+
     //查看版块信息
     @GetMapping("/section/info")
     public Response getSectionInfo(
