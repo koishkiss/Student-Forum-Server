@@ -10,6 +10,7 @@ import student.forum.model.vo.Response;
 import student.forum.service.UserService;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
     @Resource

@@ -9,6 +9,7 @@ import student.forum.model.vo.Response;
 import student.forum.service.ReplyService;
 
 @RestController
+@RequestMapping("/api")
 public class ReplyController {
 
     @Resource

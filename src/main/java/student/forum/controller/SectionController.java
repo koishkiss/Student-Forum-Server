@@ -11,6 +11,7 @@ import student.forum.model.vo.Response;
 import student.forum.service.SectionService;
 
 @RestController
+@RequestMapping("/api")
 public class SectionController {
 
     @Resource

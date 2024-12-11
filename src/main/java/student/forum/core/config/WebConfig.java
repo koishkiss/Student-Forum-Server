@@ -18,18 +18,18 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ConnectInterceptor())
-                .addPathPatterns("/**")  //填入要检查的请求
+                .addPathPatterns("/api/**")  //填入要检查的请求
                 .excludePathPatterns(
-                        "/favicon.ico",
-                        "/error",
-                        "/",
-                        "/main",
-                        "/login",
-                        "/index.html",
-                        "/assets/**",
-                        VALUE.img_web+"**",
-                        VALUE.video_web+"**",
-                        VALUE.audio_web+"**"
+//                        "/favicon.ico",
+//                        "/error",
+//                        "/",
+//                        "/main",
+//                        "/login",
+//                        "/index.html",
+//                        "/assets/**",
+//                        VALUE.img_web+"**",
+//                        VALUE.video_web+"**",
+//                        VALUE.audio_web+"**"
                 );  //填入免于检查的请求
     }
 

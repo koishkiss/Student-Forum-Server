@@ -14,6 +14,7 @@ import student.forum.service.PostService;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api")
 public class PostController {
 
     @Resource

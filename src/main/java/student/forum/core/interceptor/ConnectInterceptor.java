@@ -25,24 +25,25 @@ public class ConnectInterceptor implements HandlerInterceptor {
 
     //对任意游客开放的接口
     private static final String[] FOR_TOURIST = {
-            "/user/login",
-            "/section/info",
-            "/post/get/recommend",
-            "/post/get",
-            "/classify",
-            "/section/classify",
-            "/user/other/info",
-            "/popular/active/",
-            "/post/view",
-            "/comment/get"
+            "/api/user/login",
+            "/api/section/info",
+            "/api/post/get/recommend",
+            "/api/post/get",
+            "/api/classify",
+            "/api/section/classify",
+            "/api/user/other/info",
+            "/api/popular/active/",
+            "/api/post/view",
+            "/api/comment/get",
+            "/api/section/other"
     };
 
     //对管理员开放的接口
     private static final String[] FOR_ADMIN = {
-            "/section/create",
-            "/section/update",
-            "/section/member",
-            "/classify/add"
+            "/api/section/create",
+            "/api/section/update",
+            "/api/section/member",
+            "/api/classify/add"
     };
 
     @Override

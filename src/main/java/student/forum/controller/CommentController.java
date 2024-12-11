@@ -12,6 +12,7 @@ import student.forum.service.CommentService;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api")
 public class CommentController {
 
     @Resource
