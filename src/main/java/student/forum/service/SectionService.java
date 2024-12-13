@@ -49,7 +49,7 @@ public class SectionService {
 
         String icon = FileUtil.uploadFile(image, FileType.IMAGE);
         MAPPER.section.updateIcon(id, icon);
-        return Response.ok();
+        return Response.success(FileUtil.getFileURL(icon, FileType.IMAGE));
     }
 
     public Response updateSectionInformation(User user,

@@ -49,6 +49,7 @@ public class Section {
         returnMap.put("slogan",slogan);
         returnMap.put("memberNum",memberNum);
         returnMap.put("postNum",postNum);
+        returnMap.put("classifyId",classify);
         returnMap.put("classify",MAPPER.classify.selectById(classify).getName());
         returnMap.put("adminList",getAdminList());
         returnMap.put("createTime",createTime);
