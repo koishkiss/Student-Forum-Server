@@ -117,7 +117,7 @@ public interface ReplyMapper extends BaseMapper<Reply> {
             "JOIN `user` U ON U.`uid`=R1.`uid` " +
             "JOIN `comment` C ON R1.`comment_id`=C.`id` " +
             "JOIN `post` P ON C.`post_id`=P.`id` " +
-            "WHERE R1.`reply_time`<#{startDate} R1.`uid`<>#{uid} " +
+            "WHERE R1.`reply_time`<#{startDate} AND R1.`uid`<>#{uid} " +
             "ORDER BY R1.`reply_time` DESC " +
             "LIMIT #{pageSize}"
     )

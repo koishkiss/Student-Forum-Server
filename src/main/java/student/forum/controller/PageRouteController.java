@@ -36,8 +36,18 @@ public class PageRouteController {
         return "forward:/index.html";
     }
 
+    @GetMapping("/visit/other/person/{uid}/{item}")
+    public String otherPersonPage() {
+        return "forward:/index.html";
+    }
+
     @GetMapping("/section/{id}/post/{type}")
     public String sectionPage() {
+        return "forward:/index.html";
+    }
+
+    @GetMapping("/section/{id}/setting")
+    public String sectionPage2() {
         return "forward:/index.html";
     }
 
