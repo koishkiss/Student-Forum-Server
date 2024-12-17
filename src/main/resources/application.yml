@@ -37,6 +37,7 @@ mybatis-plus:
 path:
 #  web-path: http://127.0.0.1:22222
   web-path: http://47.113.194.64:22222
+#  web-path: http://202.194.7.29:22222
 
   default-avatar-name: default-avatar.png
   default-photo-name: default-photo.png
@@ -44,14 +45,17 @@ path:
   image-web-path: /image/
 #  image-local-path: D:/resource/forum/img/
   image-local-path: /home/resource/forum/img/
+#  image-local-path: /teach/web/2023/attach/img/
 
   video-web-path: /video/
 #  video-local-path: D:/resource/forum/video/
   video-local-path: /home/resource/forum/video/
+#  video-local-path: /teach/web/2023/attach/video/
 
   audio-web-path: /audio/
 #  audio-local-path: D:/resource/forum/audio/
   audio-local-path: /home/resource/forum/audio/
+#  audio-local-path: /teach/web/2023/attach/audio/
 
 page:
   page-size: 10
