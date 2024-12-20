@@ -25,12 +25,6 @@ public class PostController {
     public Response postNewPost(
             HttpServletRequest request,
             @RequestBody Post post) {
-        if (post.getTitle().isBlank()) {
-            return Response.failure(CommonErr.PARAM_WRONG.setMsg("标题不可为空!"));
-        }
-        if (post.getContent().isBlank()) {
-            return Response.failure(CommonErr.PARAM_WRONG.setMsg("内容不可为空!"));
-        }
         return postService.postNewPost(((User) request.getAttribute("user")).getUid(), post);
     }
 

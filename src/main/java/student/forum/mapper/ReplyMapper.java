@@ -92,7 +92,7 @@ public interface ReplyMapper extends BaseMapper<Reply> {
                 "SUBSTRING(R2.`content`,1,50) AS `myContent`," +
                 "U.`nickname` " +
             "FROM `reply` R1 " +
-            "JOIN `reply` R2 ON R1.`id`=R2.`call_id` AND R2.`uid`=#{uid} " +
+            "JOIN `reply` R2 ON R2.`id`=R1.`call_id` AND R2.`uid`=#{uid} " +
             "JOIN `user` U ON U.`uid`=R1.`uid` " +
             "JOIN `comment` C ON R1.`comment_id`=C.`id` " +
             "WHERE R1.`uid`<>#{uid} " +
@@ -112,7 +112,7 @@ public interface ReplyMapper extends BaseMapper<Reply> {
                 "SUBSTRING(R2.`content`,1,50) AS `myContent`," +
                 "U.`nickname` " +
             "FROM `reply` R1 " +
-            "JOIN `reply` R2 ON R1.`id`=R2.`call_id` AND R2.`uid`=#{uid} " +
+            "JOIN `reply` R2 ON R2.`id`=R1.`call_id` AND R2.`uid`=#{uid} " +
             "JOIN `user` U ON U.`uid`=R1.`uid` " +
             "JOIN `comment` C ON R1.`comment_id`=C.`id` " +
             "WHERE R1.`reply_time`<#{startDate} AND R1.`uid`<>#{uid} " +

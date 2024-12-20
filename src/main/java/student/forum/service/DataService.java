@@ -19,6 +19,9 @@ public class DataService {
         if (topPostList.isEmpty()) {
             return Response.failure(CommonErr.NO_DATA);
         }
+        for (Map<String,Object> i : topPostList) {
+            i.put("title", TextUtil.truncatedWords(11,i.get("title").toString()));
+        }
         return Response.success(topPostList);
     }
 

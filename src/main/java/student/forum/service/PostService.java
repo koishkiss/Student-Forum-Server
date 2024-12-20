@@ -26,13 +26,19 @@ public class PostService {
 
     //发布帖子
     public Response postNewPost(int uid, Post post) {
+        if (post.getTitle().isBlank()) {
+            return Response.failure(CommonErr.PARAM_WRONG.setMsg("标题不可为空!"));
+        }
+        if (post.getContent().isBlank()) {
+            return Response.failure(CommonErr.PARAM_WRONG.setMsg("内容不可为空!"));
+        }
         if (MAPPER.section_join.judgeExists(post.getSectionId(),uid)) {
             post.setUid(uid);
             post.setContentAsText();
             MAPPER.post.post(post);
             return Response.ok();
         } else {
-            return Response.failure(400,"请先关注该板块!");
+            return Response.failure(CommonErr.NO_AUTHORITY.setMsg("请先关注该板块!"));
         }
     }
 

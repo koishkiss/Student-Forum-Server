@@ -40,7 +40,7 @@ public interface PostMapper extends BaseMapper<Post> {
                 "P.`uid`," +
                 "P.`title`," +
                 "P.`cover`," +
-                "SUBSTRING(P.`content`,1,50) AS `content`," +
+                "SUBSTRING(P.`content`,1,100) AS `content`," +
                 "P.`post_time` AS `postTime`," +
                 "P.`view_num` AS `viewNum`," +
                 "P.`like_num` AS `likeNum`," +
@@ -65,7 +65,7 @@ public interface PostMapper extends BaseMapper<Post> {
                 "P.`uid`," +
                 "P.`title`," +
                 "P.`cover`," +
-                "SUBSTRING(P.`content`,1,50) AS `content`," +
+                "SUBSTRING(P.`content`,1,100) AS `content`," +
                 "P.`post_time` AS `postTime`," +
                 "P.`view_num` AS `viewNum`," +
                 "P.`like_num` AS `likeNum`," +
@@ -92,7 +92,7 @@ public interface PostMapper extends BaseMapper<Post> {
                 "P.`uid`," +
                 "P.`title`," +
                 "P.`cover`," +
-                "SUBSTRING(P.`content`,1,50) AS `content`," +
+                "SUBSTRING(P.`content`,1,100) AS `content`," +
                 "P.`post_time` AS `postTime`," +
                 "P.`view_num` AS `viewNum`," +
                 "P.`like_num` AS `likeNum`," +
